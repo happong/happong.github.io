@@ -1,0 +1,741 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ann (Haeun Kim) — AI × 금융 × 기술 PM</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --ink: #111111;
+      --ink-mid: #444444;
+      --ink-light: #888888;
+      --accent: #1a56db;
+      --accent-light: #e8effe;
+      --border: #e4e4e0;
+      --tag-bg: #f0f0ec;
+      --radius: 10px;
+      --max: 780px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      height: 56px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-family: 'DM Mono', monospace;
+      font-size: 14px;
+      color: var(--ink);
+      text-decoration: none;
+      letter-spacing: -0.02em;
+    }
+    .nav-links {
+      display: flex;
+      gap: 28px;
+      list-style: none;
+    }
+    .nav-links a {
+      font-size: 14px;
+      color: var(--ink-mid);
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--accent); }
+
+    /* ── HERO ── */
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 140px 24px 80px;
+    }
+    .hero-eyebrow {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero h1 {
+      font-size: clamp(36px, 6vw, 58px);
+      font-weight: 300;
+      line-height: 1.1;
+      letter-spacing: -0.03em;
+      color: var(--ink);
+      margin-bottom: 24px;
+    }
+    .hero h1 strong {
+      font-weight: 600;
+    }
+    .hero-desc {
+      font-size: 17px;
+      color: var(--ink-mid);
+      max-width: 560px;
+      line-height: 1.75;
+      margin-bottom: 36px;
+    }
+    .hero-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 40px;
+    }
+    .tag {
+      font-size: 13px;
+      background: var(--tag-bg);
+      color: var(--ink-mid);
+      padding: 5px 12px;
+      border-radius: 20px;
+      font-weight: 400;
+    }
+    .tag.accent {
+      background: var(--accent-light);
+      color: var(--accent);
+    }
+    .hero-cta {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 11px 22px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      transition: all 0.2s;
+      cursor: pointer;
+    }
+    .btn-primary {
+      background: var(--ink);
+      color: var(--white);
+    }
+    .btn-primary:hover { background: #333; }
+    .btn-secondary {
+      background: var(--off-white);
+      color: var(--ink);
+      border: 1px solid var(--border);
+    }
+    .btn-secondary:hover { background: var(--tag-bg); }
+
+    /* ── DIVIDER ── */
+    .divider {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 0 24px;
+      border-top: 1px solid var(--border);
+    }
+
+    /* ── SECTION ── */
+    section {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 72px 24px;
+    }
+    .section-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      margin-bottom: 36px;
+    }
+    h2 {
+      font-size: 28px;
+      font-weight: 500;
+      letter-spacing: -0.02em;
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 15px;
+      color: var(--ink-mid);
+      margin-bottom: 40px;
+    }
+
+    /* ── STRENGTH CARDS ── */
+    .strength-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 16px;
+    }
+    .strength-card {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 24px 20px;
+    }
+    .strength-icon {
+      font-size: 22px;
+      margin-bottom: 12px;
+    }
+    .strength-title {
+      font-size: 15px;
+      font-weight: 600;
+      margin-bottom: 8px;
+      letter-spacing: -0.01em;
+    }
+    .strength-desc {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ── PROJECT CARDS ── */
+    .project-list {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+    .project-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      transition: border-color 0.2s, box-shadow 0.2s;
+    }
+    .project-card:hover {
+      border-color: var(--accent);
+      box-shadow: 0 4px 20px rgba(26,86,219,0.07);
+    }
+    .project-header {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .project-title {
+      font-size: 17px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+    }
+    .project-badge {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      background: var(--accent-light);
+      color: var(--accent);
+      padding: 3px 9px;
+      border-radius: 20px;
+      white-space: nowrap;
+      flex-shrink: 0;
+    }
+    .project-desc {
+      font-size: 14px;
+      color: var(--ink-mid);
+      margin-bottom: 16px;
+      line-height: 1.7;
+    }
+    .project-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .project-item-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 10px;
+      color: var(--ink-light);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      margin-bottom: 4px;
+    }
+    .project-item-value {
+      font-size: 13px;
+      color: var(--ink);
+      font-weight: 500;
+    }
+    .project-result {
+      background: var(--accent-light);
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: var(--accent);
+      font-weight: 500;
+    }
+    .project-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+      margin-top: 14px;
+    }
+    .project-tag {
+      font-size: 12px;
+      background: var(--tag-bg);
+      color: var(--ink-mid);
+      padding: 3px 10px;
+      border-radius: 20px;
+    }
+
+    /* ── CAREER TIMELINE ── */
+    .career-list {
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+    }
+    .career-item {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 24px;
+      padding: 24px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .career-item:last-child { border-bottom: none; }
+    .career-period {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-light);
+      padding-top: 3px;
+      line-height: 1.5;
+    }
+    .career-company {
+      font-size: 16px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      margin-bottom: 3px;
+    }
+    .career-role {
+      font-size: 13px;
+      color: var(--accent);
+      margin-bottom: 8px;
+      font-weight: 500;
+    }
+    .career-detail {
+      font-size: 13px;
+      color: var(--ink-mid);
+      line-height: 1.65;
+    }
+
+    /* ── SKILL GRID ── */
+    .skill-grid {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 16px;
+    }
+    .skill-group {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .skill-group-title {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-light);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      margin-bottom: 12px;
+    }
+    .skill-chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px;
+    }
+    .skill-chip {
+      font-size: 13px;
+      background: var(--white);
+      color: var(--ink);
+      padding: 4px 11px;
+      border-radius: 20px;
+      border: 1px solid var(--border);
+    }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: var(--off-white);
+      border-radius: var(--radius);
+      padding: 40px;
+      text-align: center;
+    }
+    .contact-box h2 {
+      margin-bottom: 12px;
+    }
+    .contact-box p {
+      font-size: 15px;
+      color: var(--ink-mid);
+      margin-bottom: 28px;
+    }
+    .contact-links {
+      display: flex;
+      justify-content: center;
+      gap: 12px;
+      flex-wrap: wrap;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--border);
+      padding: 24px;
+      text-align: center;
+      font-size: 13px;
+      color: var(--ink-light);
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 640px) {
+      .strength-grid { grid-template-columns: 1fr; }
+      .project-row { grid-template-columns: 1fr 1fr; }
+      .career-item { grid-template-columns: 1fr; gap: 6px; }
+      .skill-grid { grid-template-columns: 1fr; }
+      .nav-links { display: none; }
+      .contact-box { padding: 28px 20px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      * { transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a class="nav-logo" href="#">ann.dev</a>
+  <ul class="nav-links">
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#career">Career</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-eyebrow">Portfolio · AI × Finance × Tech PM</p>
+  <h1>안녕하세요,<br><strong>김하은 (Ann)</strong>입니다</h1>
+  <p class="hero-desc">
+    금융 여신 실무에서 익힌 근거 기반 문제 정의 습관을,
+    기술 PM 업무에서 <strong>문제 발생 → 데이터 정의 → 해결책</strong> 방식으로 적용해왔습니다.
+    반복되는 수작업을 발견하면 AI API로 직접 해결합니다.
+  </p>
+  <div class="hero-tags">
+    <span class="tag accent">AI 자동화 도구 6종 제작</span>
+    <span class="tag accent">Claude / Gemini / GPT API</span>
+    <span class="tag">빌드 리드타임 50% 단축</span>
+    <span class="tag">180명 글로벌 프로젝트 SSOT</span>
+    <span class="tag">금융 여신 실무 2.3년</span>
+  </div>
+  <div class="hero-cta">
+    <a class="btn btn-primary" href="#projects">프로젝트 보기</a>
+    <a class="btn btn-secondary" href="mailto:eun1009sin@gmail.com">연락하기</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<!-- STRENGTHS -->
+<section id="about">
+  <p class="section-label">Core Strengths</p>
+  <div class="strength-grid">
+    <div class="strength-card">
+      <div class="strength-icon">💰</div>
+      <div class="strength-title">금융 도메인 이해</div>
+      <div class="strength-desc">대출 심사, 연체 관리, 여신 프로세스 실무 2.3년. AI가 대체해야 할 금융 업무의 병목을 현업에서 직접 체득했습니다.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">🔧</div>
+      <div class="strength-title">기술 PM / 릴리즈 운영</div>
+      <div class="strength-desc">Jenkins CI/CD 파이프라인 설계·운영, 빌드 리드타임 50% 단축. 180명 규모 글로벌 MMORPG 출시 주도.</div>
+    </div>
+    <div class="strength-card">
+      <div class="strength-icon">🤖</div>
+      <div class="strength-title">AI 자동화 도구 제작</div>
+      <div class="strength-desc">Claude / Gemini / GPT API 연동 자동화 툴 6종 직접 설계·구현. 팀 전체 반복 수작업 제거, 사내 실제 운영 중.</div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <p class="section-label">Projects</p>
+  <h2>직접 만든 것들</h2>
+  <p class="section-sub">반복되는 수작업을 발견하면 AI API로 직접 연결해 해결했습니다.</p>
+
+  <div class="project-list">
+
+    <!-- 1 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">빌드 로그 AI 분석 대시보드</div>
+        <span class="project-badge">Claude API</span>
+      </div>
+      <p class="project-desc">수십 MB 빌드 실패 로그를 사람이 직접 읽던 구조를 AI로 대체. 에러 카테고리·담당팀·심각도 자동 분류, 반복 패턴 통계화.</p>
+      <div class="project-row">
+        <div>
+          <div class="project-item-label">문제</div>
+          <div class="project-item-value">건당 30분+ 수동 분석</div>
+        </div>
+        <div>
+          <div class="project-item-label">기술</div>
+          <div class="project-item-value">Claude / GPT / Copilot API, Jenkins REST API, Node.js</div>
+        </div>
+        <div>
+          <div class="project-item-label">상태</div>
+          <div class="project-item-value">사내 실배포 운영 중</div>
+        </div>
+      </div>
+      <div class="project-result">✦ 분석 시간 대폭 단축, 반복 에러 패턴 통계화로 하드웨어 결함 사전 감지</div>
+      <div class="project-tags">
+        <span class="project-tag">Claude API</span>
+        <span class="project-tag">Jenkins</span>
+        <span class="project-tag">Node.js</span>
+        <span class="project-tag">에러 패턴 학습</span>
+      </div>
+    </div>
+
+    <!-- 2 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">SIE 공지 자동화 툴</div>
+        <span class="project-badge">Gemini API</span>
+      </div>
+      <p class="project-desc">Sony 영문 개발 공지(SDK/TRC/PSN API 변경)를 수작업으로 번역·전파하던 프로세스를 AI로 자동화. Confluence 갱신 + Teams 발송까지 원클릭.</p>
+      <div class="project-row">
+        <div>
+          <div class="project-item-label">문제</div>
+          <div class="project-item-value">영문 공지 수작업 전파</div>
+        </div>
+        <div>
+          <div class="project-item-label">기술</div>
+          <div class="project-item-value">Gemini API, Confluence API, Teams Webhook</div>
+        </div>
+        <div>
+          <div class="project-item-label">상태</div>
+          <div class="project-item-value">사내 실배포 운영 중</div>
+        </div>
+      </div>
+      <div class="project-result">✦ 공지 전파 수작업 100% 제거, 유사도 기반 중복 감지, 월간 리포트 자동 생성</div>
+      <div class="project-tags">
+        <span class="project-tag">Gemini API</span>
+        <span class="project-tag">Confluence</span>
+        <span class="project-tag">Teams</span>
+        <span class="project-tag">PDF 텍스트 추출</span>
+      </div>
+    </div>
+
+    <!-- 3 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">데일리 스크럼 자동 생성</div>
+        <span class="project-badge">Python</span>
+      </div>
+      <p class="project-desc">매일 아침 팀 전체가 수기로 생성하던 Confluence 스크럼 페이지를 Python 스케줄러로 완전 자동화. 전날 "오늘 할 일" → 당일 "어제 한 일" 자동 이관.</p>
+      <div class="project-row">
+        <div>
+          <div class="project-item-label">문제</div>
+          <div class="project-item-value">매일 수기 페이지 생성</div>
+        </div>
+        <div>
+          <div class="project-item-label">기술</div>
+          <div class="project-item-value">Python, Confluence API, Teams Webhook</div>
+        </div>
+        <div>
+          <div class="project-item-label">실행</div>
+          <div class="project-item-value">매일 07:00 자동 실행</div>
+        </div>
+      </div>
+      <div class="project-result">✦ 팀 전체 스크럼 수작업 100% 제거, 공휴일 자동 제외, 이상 감지 알림</div>
+      <div class="project-tags">
+        <span class="project-tag">Python</span>
+        <span class="project-tag">Confluence API</span>
+        <span class="project-tag">스케줄러</span>
+      </div>
+    </div>
+
+    <!-- 4 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">CI/CD 파이프라인 최적화</div>
+        <span class="project-badge">Jenkins</span>
+      </div>
+      <p class="project-desc">Dev/QA 빌드가 단일 파이프라인에서 병렬 실행되며 리소스 충돌·빌드 실패가 반복되던 문제를 데이터 기반으로 분석해 구조 재설계.</p>
+      <div class="project-row">
+        <div>
+          <div class="project-item-label">문제</div>
+          <div class="project-item-value">빌드 실패 반복, 리소스 충돌</div>
+        </div>
+        <div>
+          <div class="project-item-label">해결</div>
+          <div class="project-item-value">파이프라인 분리 + 시간축 스케줄링</div>
+        </div>
+        <div>
+          <div class="project-item-label">협업</div>
+          <div class="project-item-value">Jenkins 엔지니어·인프라팀</div>
+        </div>
+      </div>
+      <div class="project-result">✦ 빌드 처리 시간 50% 단축, 빌드 실패율 50% 이상 감소</div>
+      <div class="project-tags">
+        <span class="project-tag">Jenkins</span>
+        <span class="project-tag">CI/CD</span>
+        <span class="project-tag">파이프라인 설계</span>
+      </div>
+    </div>
+
+    <!-- 5 -->
+    <div class="project-card">
+      <div class="project-header">
+        <div class="project-title">글로벌 개발 일정 SSOT 구축</div>
+        <span class="project-badge">Excel · 180명</span>
+      </div>
+      <p class="project-desc">Teams·Confluence·개별 Excel로 분산된 일정을 하나의 Excel 기반 단일 관리 체계로 통합. 국내/글로벌 두 트랙 + 유관부서 일정을 한 화면에서 가시화.</p>
+      <div class="project-row">
+        <div>
+          <div class="project-item-label">문제</div>
+          <div class="project-item-value">일정 분산, 충돌 발생</div>
+        </div>
+        <div>
+          <div class="project-item-label">규모</div>
+          <div class="project-item-value">180명, 글로벌 170개국</div>
+        </div>
+        <div>
+          <div class="project-item-label">특징</div>
+          <div class="project-item-value">KST/UTC 병기, 간트 기반</div>
+        </div>
+      </div>
+      <div class="project-result">✦ 일정 싱크 오류 최소화, 전체 마일스톤 가시성 확보로 의사결정 속도 향상</div>
+      <div class="project-tags">
+        <span class="project-tag">SSOT</span>
+        <span class="project-tag">Excel VBA</span>
+        <span class="project-tag">글로벌 일정 관리</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CAREER -->
+<section id="career">
+  <p class="section-label">Career</p>
+  <h2>경력</h2>
+
+  <div class="career-list">
+    <div class="career-item">
+      <div class="career-period">2022.07 —<br>재직 중</div>
+      <div>
+        <div class="career-company">㈜NC</div>
+        <div class="career-role">개발 PM</div>
+        <div class="career-detail">글로벌 MMORPG(블레이드앤소울 IP, 170개국) 빌드/릴리즈 파이프라인, 글로벌 일정 관리, 멀티플랫폼 출시 담당. AI 자동화 도구 6종 직접 제작·운영.</div>
+      </div>
+    </div>
+    <div class="career-item">
+      <div class="career-period">2019.06 —<br>2021.07</div>
+      <div>
+        <div class="career-company">㈜휴넥트</div>
+        <div class="career-role">IT 서비스데스크</div>
+        <div class="career-detail">정부과천청사·방위사업청 공무원 대상 IT 서비스데스크 운영. 사내 전산망 장애·문의 대응, 이슈 분류 및 에스컬레이션 처리.</div>
+      </div>
+    </div>
+    <div class="career-item">
+      <div class="career-period">2016.11 —<br>2017.06</div>
+      <div>
+        <div class="career-company">㈜오케이저축은행</div>
+        <div class="career-role">여신 담당</div>
+        <div class="career-detail">햇살론(최대 3,000만원) 상담·서류 심사, 여신 사후 관리, 전표 발행. 신용도·재직·서류 검증 프로세스 직접 수행.</div>
+      </div>
+    </div>
+    <div class="career-item">
+      <div class="career-period">2015.03 —<br>2016.11</div>
+      <div>
+        <div class="career-company">㈜미즈사랑대부 / BSHR 파견</div>
+        <div class="career-role">대출 상담·CRM 담당</div>
+        <div class="career-detail">여성 특화 신속 대출 인바운드 상담, CRM 기반 연체 관리. 고객 유형별 분기 심사 프로세스 운영.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <p class="section-label">Skills</p>
+  <h2>기술 스택</h2>
+
+  <div class="skill-grid">
+    <div class="skill-group">
+      <div class="skill-group-title">AI / API</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Claude API</span>
+        <span class="skill-chip">Gemini API</span>
+        <span class="skill-chip">GPT API</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">빌드 / 배포</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Jenkins</span>
+        <span class="skill-chip">Perforce (P4V)</span>
+        <span class="skill-chip">Git</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">개발</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Node.js</span>
+        <span class="skill-chip">Python</span>
+        <span class="skill-chip">HTML/CSS/JS</span>
+        <span class="skill-chip">Excel VBA</span>
+      </div>
+    </div>
+    <div class="skill-group">
+      <div class="skill-group-title">협업 도구</div>
+      <div class="skill-chips">
+        <span class="skill-chip">Confluence API</span>
+        <span class="skill-chip">Teams Webhook</span>
+        <span class="skill-chip">Jira</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="divider"></div>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-box">
+    <h2>함께 일해요</h2>
+    <p>AI PM, 기술 PM, PMO 포지션에 관심 있습니다.<br>커피챗이나 협업 제안 편하게 연락주세요.</p>
+    <div class="contact-links">
+      <a class="btn btn-primary" href="mailto:eun1009sin@gmail.com">이메일 보내기</a>
+      <a class="btn btn-secondary" href="https://github.com/happong/AI_Workflow_Automation_Tools" target="_blank">GitHub</a>
+      <a class="btn btn-secondary" href="https://blog.naver.com/hahae_dv" target="_blank">Blog</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Ann (Haeun Kim) · Built with HTML/CSS · Hosted on GitHub Pages
+</footer>
+
+</body>
+</html>
