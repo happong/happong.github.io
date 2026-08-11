@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>데일리 스크럼 자동 생성 — Ann (Haeun Kim)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --off-white: #f7f7f5; --ink: #111111;
+      --ink-mid: #444444; --ink-light: #888888; --accent: #1a56db;
+      --accent-light: #e8effe; --border: #e4e4e0; --tag-bg: #f0f0ec;
+      --radius: 10px; --max: 780px;
+      --red: #dc2626; --red-light: #fef2f2;
+      --green: #0d7a4e; --green-light: #e6f9f0;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+    .hero { max-width: var(--max); margin: 0 auto; padding: 100px 24px 48px; border-bottom: 1px solid var(--border); }
+    .hero-breadcrumb { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+    .hero-breadcrumb a { color: var(--ink-light); text-decoration: none; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .hero-desc { font-size: 16px; color: var(--ink-mid); max-width: 580px; margin-bottom: 28px; line-height: 1.75; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta-chip { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-family: 'DM Mono', monospace; }
+    .meta-chip.blue { background: var(--accent-light); color: var(--accent); }
+    .meta-chip.gray { background: var(--tag-bg); color: var(--ink-mid); }
+    .meta-chip.green { background: var(--green-light); color: var(--green); }
+    .content { max-width: var(--max); margin: 0 auto; padding: 0 24px 80px; }
+    .step-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    .step-section:last-of-type { border-bottom: none; }
+    .step-label { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+    .step-number { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+    .step-number.red { background: var(--red-light); color: var(--red); }
+    .step-number.blue { background: var(--accent-light); color: var(--accent); }
+    .step-number.green { background: var(--green-light); color: var(--green); }
+    .step-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .step-section h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .step-section p { font-size: 15px; color: var(--ink-mid); margin-bottom: 24px; line-height: 1.75; }
+    .img-block { margin: 24px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+    .img-block img { width: 100%; display: block; }
+    .img-caption { padding: 10px 16px; font-size: 12px; color: var(--ink-light); background: var(--off-white); font-family: 'DM Mono', monospace; }
+    .problem-cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin: 24px 0; }
+    .problem-card { background: var(--red-light); border-radius: var(--radius); padding: 16px; }
+    .problem-card-icon { font-size: 18px; margin-bottom: 8px; }
+    .problem-card-title { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+    .problem-card-desc { font-size: 12px; color: #7f1d1d; line-height: 1.5; }
+    .flow { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 24px 0; padding: 20px; background: var(--off-white); border-radius: var(--radius); }
+    .flow-step { background: var(--white); border: 1px solid var(--border); border-radius: 7px; padding: 8px 14px; font-size: 13px; font-weight: 500; }
+    .flow-arrow { color: var(--ink-light); font-size: 14px; }
+    .spec-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .spec-item { background: var(--off-white); border-radius: var(--radius); padding: 18px; }
+    .spec-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-light); text-transform: uppercase; letter-spacing: 0.08em; margin-bottom: 6px; }
+    .spec-value { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 4px; }
+    .spec-desc { font-size: 12px; color: var(--ink-mid); line-height: 1.5; }
+    .result-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .result-card { background: var(--green-light); border-radius: var(--radius); padding: 20px; }
+    .result-card-value { font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: -0.03em; margin-bottom: 4px; }
+    .result-card-label { font-size: 13px; color: var(--green); font-weight: 500; margin-bottom: 6px; }
+    .result-card-desc { font-size: 12px; color: #065f46; line-height: 1.5; }
+    .insight-box { background: var(--accent-light); border-radius: var(--radius); padding: 24px; margin-top: 32px; }
+    .insight-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .insight-text { font-size: 16px; color: var(--ink); font-weight: 500; line-height: 1.65; letter-spacing: -0.01em; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; text-decoration: none; background: var(--off-white); color: var(--ink); border: 1px solid var(--border); margin-top: 48px; transition: background 0.2s; }
+    .back-btn:hover { background: var(--tag-bg); }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+    @media (max-width: 640px) {
+      .problem-cards { grid-template-columns: 1fr; }
+      .spec-grid { grid-template-columns: 1fr; }
+      .result-cards { grid-template-columns: 1fr; }
+      .img-row { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">ann.dev</a>
+  <a class="nav-back" href="../index.html">← 돌아가기</a>
+</nav>
+
+<div class="hero">
+  <p class="hero-breadcrumb"><a href="../index.html">Home</a> / Work Projects / AI 자동화</p>
+  <h1>데일리 스크럼 자동 생성</h1>
+  <p class="hero-desc">매 영업일 아침 팀 전체가 수기로 생성하던 Confluence 스크럼 페이지를 Python 스케줄러로 완전 자동화. 전날 "오늘 할 일" → 당일 "어제 한 일" 자동 이관까지.</p>
+  <div class="hero-meta">
+    <span class="meta-chip blue">Python</span>
+    <span class="meta-chip blue">Confluence API</span>
+    <span class="meta-chip blue">Teams Webhook</span>
+    <span class="meta-chip blue">Windows Task Scheduler</span>
+    <span class="meta-chip green">사내 실배포 운영 중</span>
+    <span class="meta-chip gray">2026</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 문제 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number red">1</div>
+      <span class="step-name">Problem · 문제 상황</span>
+    </div>
+    <h2>매일 아침, 누군가가 스크럼 페이지를 만들어야 했다</h2>
+    <p>팀은 매일 Confluence에 데일리 스크럼 페이지를 만들고, Teams 채널에 링크를 공유했습니다. 전날 "오늘 할 일"을 다음 날 "어제 한 일"로 옮기는 것도 수작업이었습니다. 단순하지만 매일 반복되는 이 작업이 담당자에게 부담이 됐습니다.</p>
+
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="problem-card-icon">📅</div>
+        <div class="problem-card-title">매일 수기 페이지 생성</div>
+        <div class="problem-card-desc">영업일마다 Confluence에 새 스크럼 페이지를 직접 만들어야 했습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">✍️</div>
+        <div class="problem-card-title">수동 이관 작업</div>
+        <div class="problem-card-desc">전날 "오늘 할 일"을 오늘 "어제 한 일"로 복사하는 수작업이 반복됐습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">🔔</div>
+        <div class="problem-card-title">매일 Teams 공유 필요</div>
+        <div class="problem-card-desc">페이지 생성 후 Teams 채널에 링크를 직접 공유해야 팀이 인지했습니다</div>
+      </div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/daily-scrum/01-manual-teams.png" alt="수동으로 스크럼 공유하던 Teams 채널" />
+      <div class="img-caption">자동화 이전 Teams 채널. 담당자가 직접 Confluence 링크를 올렸고, 4/09부터는 Webhook Bot이 자동 발송으로 전환된 것을 확인할 수 있습니다.</div>
+    </div>
+  </div>
+
+  <!-- 해결 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number blue">2</div>
+      <span class="step-name">Solution · 해결 방법</span>
+    </div>
+    <h2>매일 07:00, 스케줄러가 모든 것을 처리한다</h2>
+    <p>Python 스크립트가 Confluence API로 전날 페이지를 읽고, 규칙에 따라 당일 페이지를 생성한 뒤 Teams에 알림을 보냅니다. Windows Task Scheduler에 등록되어 사람이 없어도 자동으로 실행됩니다.</p>
+
+    <div class="flow">
+      <div class="flow-step">07:00 자동 실행</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">전날 페이지 읽기</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">오늘 할 일 → 어제 한 일</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">새 페이지 생성</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Teams 알림 발송</div>
+    </div>
+
+    <div class="spec-grid">
+      <div class="spec-item">
+        <div class="spec-label">실행 시각</div>
+        <div class="spec-value">매일 오전 07:00</div>
+        <div class="spec-desc">토/일/공휴일 자동 제외 (holidays 라이브러리 KR 기준)</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">페이지 이관 규칙</div>
+        <div class="spec-value">오늘 할 일 → 어제 한 일</div>
+        <div class="spec-desc">텍스트·이미지·동영상 첨부 포함 전체 복사</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">중복 생성 방지</div>
+        <div class="spec-value">동일 제목 감지 후 스킵</div>
+        <div class="spec-desc">이미 존재하는 페이지는 생성하지 않고 넘어감</div>
+      </div>
+      <div class="spec-item">
+        <div class="spec-label">알림 분리</div>
+        <div class="spec-value">팀 채널 / 개인 채널</div>
+        <div class="spec-desc">구조 이상은 개인 알림, 생성 완료·오류는 팀 전체 알림</div>
+      </div>
+    </div>
+
+    <div class="img-row">
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/daily-scrum/02-task-scheduler-overview.png" alt="Windows 작업 스케줄러 — JSYDailyScrum 등록" />
+        <div class="img-caption">작업 스케줄러에 JSYDailyScrum 등록. 매주 월~금 오전 7:00 실행으로 설정됐습니다.</div>
+      </div>
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/daily-scrum/03-task-trigger.png" alt="트리거 설정 — 매주 월~금 오전 7:00" />
+        <div class="img-caption">트리거 상세. 2026-07-15부터 매주 월·화·수·목·금요일 오전 7:00 실행.</div>
+      </div>
+    </div>
+
+    <div class="img-row">
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/daily-scrum/04-task-action.png" alt="동작 설정 — run_daily_scrum.bat 실행" />
+        <div class="img-caption">동작 설정. run_daily_scrum.bat 파일을 실행해 Python 스크립트를 구동합니다.</div>
+      </div>
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/daily-scrum/05-task-log.png" alt="실행 기록 로그 — 2026-08-11 오전 7:00 완료" />
+        <div class="img-caption">실행 기록. 2026-08-11 오전 7:00:06에 Task completed. 매일 정상 실행 중.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 결과 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number green">3</div>
+      <span class="step-name">Result · 결과</span>
+    </div>
+    <h2>아침 7시, 아무도 없어도 스크럼 페이지가 만들어진다</h2>
+    <p>팀원들은 출근해서 Teams 알림을 확인하고 Confluence 링크를 클릭하면 됩니다. 페이지 생성·이관·공유까지 전 과정이 사람 없이 자동으로 처리됩니다.</p>
+
+    <div class="result-cards">
+      <div class="result-card">
+        <div class="result-card-value">100%</div>
+        <div class="result-card-label">스크럼 수작업 제거</div>
+        <div class="result-card-desc">페이지 생성·이관·Teams 공유 전 과정 자동화</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">매일</div>
+        <div class="result-card-label">무중단 운영</div>
+        <div class="result-card-desc">담당자 부재 시에도 07:00에 정확히 실행</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">자동</div>
+        <div class="result-card-label">공휴일 제외</div>
+        <div class="result-card-desc">한국 공휴일·주말은 자동으로 건너뜀</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">분리</div>
+        <div class="result-card-label">알림 체계</div>
+        <div class="result-card-desc">오류·이상은 담당자 개인 채널로만 전달해 팀 노이즈 최소화</div>
+      </div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/daily-scrum/06-confluence-page.png" alt="자동 생성된 Confluence 데일리 스크럼 페이지" />
+      <div class="img-caption">자동 생성된 26.08.11 데일리 스크럼 페이지. 왼쪽 사이드바에 날짜별 페이지가 누적됩니다. 어제 한 일은 전날 "오늘 할 일"에서 자동 이관됩니다.</div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/daily-scrum/07-teams-auto-notify.png" alt="Teams 채널 Webhook Bot 자동 알림" />
+      <div class="img-caption">자동화 후 Teams 채널. Webhook Bot이 매일 오전 7:00에 "데일리 스크럼 페이지가 생성되었습니다" 알림과 함께 Confluence 링크를 자동 발송합니다.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Insight</div>
+      <div class="insight-text">
+        "단순 반복 작업을 자동화할 때 가장 중요한 건 예외 처리입니다.<br>
+        공휴일 제외, 중복 생성 방지, 구조 이상 감지처럼 '만약에'를 미리 설계해두지 않으면 자동화가 오히려 혼란을 만듭니다.<br>
+        현업 경험이 있어야 이 예외들을 제대로 정의할 수 있습니다."
+      </div>
+    </div>
+  </div>
+
+  <a class="back-btn" href="../index.html">← 프로젝트 목록으로</a>
+
+</div>
+</body>
+</html>
