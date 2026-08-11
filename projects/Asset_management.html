@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>빌드 머신 자산 관리 시스템 — Ann (Haeun Kim)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --off-white: #f7f7f5; --ink: #111111;
+      --ink-mid: #444444; --ink-light: #888888; --accent: #1a56db;
+      --accent-light: #e8effe; --border: #e4e4e0; --tag-bg: #f0f0ec;
+      --radius: 10px; --max: 780px;
+      --red: #dc2626; --red-light: #fef2f2;
+      --green: #0d7a4e; --green-light: #e6f9f0;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+    nav { position: fixed; top: 0; left: 0; right: 0; z-index: 100; background: rgba(255,255,255,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px; display: flex; align-items: center; justify-content: space-between; }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+    .hero { max-width: var(--max); margin: 0 auto; padding: 100px 24px 48px; border-bottom: 1px solid var(--border); }
+    .hero-breadcrumb { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-light); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 20px; }
+    .hero-breadcrumb a { color: var(--ink-light); text-decoration: none; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero h1 { font-size: clamp(28px, 5vw, 42px); font-weight: 600; letter-spacing: -0.03em; line-height: 1.1; margin-bottom: 16px; }
+    .hero-desc { font-size: 16px; color: var(--ink-mid); max-width: 580px; margin-bottom: 28px; line-height: 1.75; }
+    .hero-meta { display: flex; flex-wrap: wrap; gap: 8px; }
+    .meta-chip { font-size: 12px; padding: 4px 12px; border-radius: 20px; font-family: 'DM Mono', monospace; }
+    .meta-chip.blue { background: var(--accent-light); color: var(--accent); }
+    .meta-chip.gray { background: var(--tag-bg); color: var(--ink-mid); }
+    .meta-chip.green { background: var(--green-light); color: var(--green); }
+    .content { max-width: var(--max); margin: 0 auto; padding: 0 24px 80px; }
+    .step-section { padding: 56px 0; border-bottom: 1px solid var(--border); }
+    .step-section:last-of-type { border-bottom: none; }
+    .step-label { display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px; }
+    .step-number { width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-family: 'DM Mono', monospace; font-size: 12px; font-weight: 500; }
+    .step-number.red { background: var(--red-light); color: var(--red); }
+    .step-number.blue { background: var(--accent-light); color: var(--accent); }
+    .step-number.green { background: var(--green-light); color: var(--green); }
+    .step-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--ink-light); }
+    .step-section h2 { font-size: 24px; font-weight: 600; letter-spacing: -0.02em; margin-bottom: 12px; }
+    .step-section p { font-size: 15px; color: var(--ink-mid); margin-bottom: 24px; line-height: 1.75; }
+    .img-block { margin: 24px 0; border-radius: var(--radius); overflow: hidden; border: 1px solid var(--border); }
+    .img-block img { width: 100%; display: block; }
+    .img-caption { padding: 10px 16px; font-size: 12px; color: var(--ink-light); background: var(--off-white); font-family: 'DM Mono', monospace; }
+    .problem-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .problem-card { background: var(--red-light); border-radius: var(--radius); padding: 16px; }
+    .problem-card-icon { font-size: 18px; margin-bottom: 8px; }
+    .problem-card-title { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+    .problem-card-desc { font-size: 12px; color: #7f1d1d; line-height: 1.5; }
+    .feature-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .feature-item { background: var(--off-white); border-radius: var(--radius); padding: 18px; }
+    .feature-icon { font-size: 18px; margin-bottom: 8px; }
+    .feature-title { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+    .feature-desc { font-size: 13px; color: var(--ink-mid); line-height: 1.5; }
+    .result-cards { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; margin: 24px 0; }
+    .result-card { background: var(--green-light); border-radius: var(--radius); padding: 20px; }
+    .result-card-value { font-size: 28px; font-weight: 700; color: var(--green); letter-spacing: -0.03em; margin-bottom: 4px; }
+    .result-card-label { font-size: 13px; color: var(--green); font-weight: 500; margin-bottom: 6px; }
+    .result-card-desc { font-size: 12px; color: #065f46; line-height: 1.5; }
+    .insight-box { background: var(--accent-light); border-radius: var(--radius); padding: 24px; margin-top: 32px; }
+    .insight-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 8px; }
+    .insight-text { font-size: 16px; color: var(--ink); font-weight: 500; line-height: 1.65; letter-spacing: -0.01em; }
+    .back-btn { display: inline-flex; align-items: center; gap: 8px; padding: 11px 22px; border-radius: var(--radius); font-size: 14px; font-weight: 500; text-decoration: none; background: var(--off-white); color: var(--ink); border: 1px solid var(--border); margin-top: 48px; transition: background 0.2s; }
+    .back-btn:hover { background: var(--tag-bg); }
+    .img-row { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 24px 0; }
+    @media (max-width: 640px) {
+      .problem-cards { grid-template-columns: 1fr; }
+      .feature-grid { grid-template-columns: 1fr; }
+      .result-cards { grid-template-columns: 1fr; }
+      .img-row { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">ann.dev</a>
+  <a class="nav-back" href="../index.html">← 돌아가기</a>
+</nav>
+
+<div class="hero">
+  <p class="hero-breadcrumb"><a href="../index.html">Home</a> / Work Projects / 사내 자동화</p>
+  <h1>빌드 머신 자산 관리 시스템</h1>
+  <p class="hero-desc">111개 빌드 머신 자산을 Confluence 수기 표로 관리하던 구조를 웹 기반 통합 관리 시스템으로 전환. 실시간 온라인 상태 모니터링·승인 워크플로우·Confluence 자동 동기화까지.</p>
+  <div class="hero-meta">
+    <span class="meta-chip blue">Node.js</span>
+    <span class="meta-chip blue">Express</span>
+    <span class="meta-chip blue">Confluence API</span>
+    <span class="meta-chip blue">PowerShell</span>
+    <span class="meta-chip green">사내 실배포 운영 중</span>
+    <span class="meta-chip gray">2026</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- 문제 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number red">1</div>
+      <span class="step-name">Problem · 문제 상황</span>
+    </div>
+    <h2>111개 자산이 있는데, 어디 있는지 누가 쓰는지 알 수 없었다</h2>
+    <p>Confluence에 자산 정보가 등록되어 있었지만 수기로 관리되다 보니 실제 상황과 달랐습니다. 자산의 위치·IP·사양·사용처가 불명확했고, 실제 대여자 정보가 불일치하는 경우도 많았습니다. 자산이 필요할 때 어디서 구해야 하는지, 지금 온라인인지조차 알 수 없었습니다.</p>
+
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="problem-card-icon">📋</div>
+        <div class="problem-card-title">Confluence 수기 관리의 한계</div>
+        <div class="problem-card-desc">위치·IP·사양·사용처 정보가 부정확하고 실제 대여자 정보가 불일치했습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">❓</div>
+        <div class="problem-card-title">온라인 상태 파악 불가</div>
+        <div class="problem-card-desc">어떤 머신이 지금 온라인인지, 어디서 접근 가능한지 실시간으로 알 수 없었습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">📝</div>
+        <div class="problem-card-title">자산 추가 요청 프로세스 없음</div>
+        <div class="problem-card-desc">새 자산을 추가하거나 변경할 표준 프로세스가 없어 정보가 산발적으로 관리됐습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">🔍</div>
+        <div class="problem-card-title">사양 정보 수집 수작업</div>
+        <div class="problem-card-desc">각 머신의 CPU·RAM·GPU·Storage 정보를 일일이 직접 확인해야 했습니다</div>
+      </div>
+    </div>
+
+    <div class="img-row">
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/asset-management/01-confluence-old.png" alt="기존 Confluence 수기 자산 표" />
+        <div class="img-caption">기존 Confluence 수기 관리 표. 196번 편집됐음에도 정보 불일치가 지속됐습니다.</div>
+      </div>
+      <div class="img-block" style="margin: 0;">
+        <img src="../images/asset-management/02-confluence-rental.png" alt="두얼센스 대여현황 수기 관리" />
+        <div class="img-caption">두얼센스 대여현황도 수기 관리. 실제 대여자 확인이 필요할 때마다 PM에게 문의해야 했습니다.</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 해결 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number blue">2</div>
+      <span class="step-name">Solution · 해결 방법</span>
+    </div>
+    <h2>111개 자산을 웹 시스템으로 통합 관리</h2>
+    <p>Node.js 기반 웹 애플리케이션으로 자산 현황을 통합 관리합니다. 로그인 기반 권한 관리, 실시간 온라인 상태 모니터링, 자산 추가 요청·승인 워크플로우, Confluence 자동 동기화까지 한 시스템에서 처리합니다.</p>
+
+    <div class="feature-grid">
+      <div class="feature-item">
+        <div class="feature-icon">🟢</div>
+        <div class="feature-title">실시간 온라인 상태</div>
+        <div class="feature-desc">TCP 연결로 각 자산의 온라인/오프라인 상태와 응답 시간(ms)을 실시간 표시</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">✅</div>
+        <div class="feature-title">승인 워크플로우</div>
+        <div class="feature-desc">자산 추가 요청 → 관리자 승인/거절 → 자동 반영의 표준 프로세스 구축</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🖥️</div>
+        <div class="feature-title">랙 배치도 시각화</div>
+        <div class="feature-desc">서버실 랙별 자산 배치를 드래그앤드롭으로 관리하고 시각적으로 확인</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">🔄</div>
+        <div class="feature-title">Confluence 자동 동기화</div>
+        <div class="feature-desc">자산 정보 변경 시 Confluence 페이지에 자동 반영. 수기 업데이트 불필요</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">📱</div>
+        <div class="feature-title">모바일 사양 수집</div>
+        <div class="feature-desc">모바일로 접속해 OS/메상도 자동 수집 + 이미지 직접 입력 후 txt 저장</div>
+      </div>
+      <div class="feature-item">
+        <div class="feature-icon">⚙️</div>
+        <div class="feature-title">PowerShell 스크립트 관리</div>
+        <div class="feature-desc">빌드 머신 사양 수집 스크립트를 관리자 페이지에서 배포·관리</div>
+      </div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/asset-management/03-dashboard-main.png" alt="자산 관리 시스템 메인 대시보드" />
+      <div class="img-caption">메인 대시보드. 111개 전체 자산의 온라인(29)/오프라인(25) 상태, PC/모바일/PS별 분류를 한눈에 파악할 수 있습니다.</div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/asset-management/04-rack-layout.png" alt="랙 배치도 탭 — 서버별 자산 배치 시각화" />
+      <div class="img-caption">랙 배치도 탭. 서버실 랙 1~6별로 자산이 어디 배치되어 있는지 시각적으로 확인하고 드래그앤드롭으로 관리할 수 있습니다.</div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/asset-management/05-admin-page.png" alt="관리자 페이지 — 스크립트 관리 및 Confluence 동기화" />
+      <div class="img-caption">관리자 페이지. PC 스펙 수집 PowerShell 스크립트 배포, 모바일 정보 수집, Confluence 자산 정보 동기화를 한 곳에서 관리합니다.</div>
+    </div>
+  </div>
+
+  <!-- 결과 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number green">3</div>
+      <span class="step-name">Result · 결과</span>
+    </div>
+    <h2>자산 현황이 실시간으로 보이기 시작했다</h2>
+    <p>111개 자산의 위치·IP·사양·사용처·온라인 상태를 한 화면에서 확인할 수 있게 됐습니다. 자산 추가 요청은 표준 워크플로우로 처리되고, Confluence는 자동으로 최신 상태를 유지합니다.</p>
+
+    <div class="result-cards">
+      <div class="result-card">
+        <div class="result-card-value">111개</div>
+        <div class="result-card-label">통합 자산 관리</div>
+        <div class="result-card-desc">PC·모바일·PS 등 전체 자산을 한 시스템에서 관리</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">실시간</div>
+        <div class="result-card-label">온라인 상태 모니터링</div>
+        <div class="result-card-desc">TCP 연결 기반으로 각 자산의 온라인/오프라인 상태 즉시 확인</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">표준화</div>
+        <div class="result-card-label">자산 추가 프로세스</div>
+        <div class="result-card-desc">요청→승인→반영 워크플로우로 자산 관리 프로세스 표준화</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">자동</div>
+        <div class="result-card-label">Confluence 동기화</div>
+        <div class="result-card-desc">수기 업데이트 없이 자산 정보 변경 시 Confluence 자동 반영</div>
+      </div>
+    </div>
+
+    <div class="img-block">
+      <img src="../images/asset-management/06-confluence-synced.png" alt="Confluence 자산 정보 자동 동기화 결과" />
+      <div class="img-caption">Confluence 자동 동기화 결과. 자산 관리 시스템에서 변경된 정보가 Confluence 페이지에 자동 반영되어 수기 업데이트가 불필요해졌습니다.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Insight</div>
+      <div class="insight-text">
+        "도구를 만들기 전에 가장 중요한 건 '왜 수기 관리가 실패하는가'를 이해하는 것입니다.<br>
+        정보가 틀리는 건 사람이 게을러서가 아니라 업데이트 동선이 불편하기 때문입니다.<br>
+        자동 동기화와 모바일 수집을 설계한 건 그 동선을 없애기 위해서였습니다."
+      </div>
+    </div>
+  </div>
+
+  <a class="back-btn" href="../index.html">← 프로젝트 목록으로</a>
+
+</div>
+</body>
+</html>
