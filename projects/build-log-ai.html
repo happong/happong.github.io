@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>빌드 로그 AI 분석 대시보드 — Ann (Haeun Kim)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --off-white: #f7f7f5;
+      --ink: #111111;
+      --ink-mid: #444444;
+      --ink-light: #888888;
+      --accent: #1a56db;
+      --accent-light: #e8effe;
+      --border: #e4e4e0;
+      --tag-bg: #f0f0ec;
+      --radius: 10px;
+      --max: 780px;
+      --red: #dc2626;
+      --red-light: #fef2f2;
+      --green: #0d7a4e;
+      --green-light: #e6f9f0;
+    }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--white);
+      color: var(--ink);
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    /* NAV */
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--ink); text-decoration: none; }
+    .nav-back { font-size: 13px; color: var(--ink-mid); text-decoration: none; display: flex; align-items: center; gap: 6px; transition: color 0.2s; }
+    .nav-back:hover { color: var(--accent); }
+
+    /* HERO */
+    .hero {
+      max-width: var(--max);
+      margin: 0 auto;
+      padding: 100px 24px 48px;
+      border-bottom: 1px solid var(--border);
+    }
+    .hero-breadcrumb {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--ink-light);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+    }
+    .hero-breadcrumb a { color: var(--ink-light); text-decoration: none; }
+    .hero-breadcrumb a:hover { color: var(--accent); }
+    .hero h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 600;
+      letter-spacing: -0.03em;
+      line-height: 1.1;
+      margin-bottom: 16px;
+    }
+    .hero-desc {
+      font-size: 16px;
+      color: var(--ink-mid);
+      max-width: 580px;
+      margin-bottom: 28px;
+    }
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .meta-chip {
+      font-size: 12px;
+      padding: 4px 12px;
+      border-radius: 20px;
+      font-family: 'DM Mono', monospace;
+    }
+    .meta-chip.blue { background: var(--accent-light); color: var(--accent); }
+    .meta-chip.gray { background: var(--tag-bg); color: var(--ink-mid); }
+    .meta-chip.green { background: var(--green-light); color: var(--green); }
+
+    /* SECTION */
+    .content { max-width: var(--max); margin: 0 auto; padding: 0 24px 80px; }
+
+    .step-section {
+      padding: 56px 0;
+      border-bottom: 1px solid var(--border);
+    }
+    .step-section:last-of-type { border-bottom: none; }
+
+    .step-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 20px;
+    }
+    .step-number {
+      width: 28px; height: 28px;
+      border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      font-weight: 500;
+    }
+    .step-number.red { background: var(--red-light); color: var(--red); }
+    .step-number.blue { background: var(--accent-light); color: var(--accent); }
+    .step-number.green { background: var(--green-light); color: var(--green); }
+    .step-name {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--ink-light);
+    }
+
+    .step-section h2 {
+      font-size: 24px;
+      font-weight: 600;
+      letter-spacing: -0.02em;
+      margin-bottom: 12px;
+    }
+    .step-section p {
+      font-size: 15px;
+      color: var(--ink-mid);
+      margin-bottom: 24px;
+      line-height: 1.75;
+    }
+
+    /* IMAGE BLOCK */
+    .img-block {
+      margin: 24px 0;
+      border-radius: var(--radius);
+      overflow: hidden;
+      border: 1px solid var(--border);
+    }
+    .img-block img {
+      width: 100%;
+      display: block;
+    }
+    .img-caption {
+      padding: 10px 16px;
+      font-size: 12px;
+      color: var(--ink-light);
+      background: var(--off-white);
+      font-family: 'DM Mono', monospace;
+    }
+
+    /* PLACEHOLDER */
+    .img-placeholder {
+      margin: 24px 0;
+      border-radius: var(--radius);
+      border: 2px dashed var(--border);
+      background: var(--off-white);
+      padding: 40px 24px;
+      text-align: center;
+    }
+    .img-placeholder-icon { font-size: 28px; margin-bottom: 8px; }
+    .img-placeholder-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 12px;
+      color: var(--ink-light);
+      margin-bottom: 4px;
+    }
+    .img-placeholder-desc { font-size: 13px; color: var(--ink-light); }
+
+    /* PROBLEM CARDS */
+    .problem-cards {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .problem-card {
+      background: var(--red-light);
+      border-radius: var(--radius);
+      padding: 16px;
+    }
+    .problem-card-icon { font-size: 18px; margin-bottom: 8px; }
+    .problem-card-title { font-size: 13px; font-weight: 600; color: var(--red); margin-bottom: 4px; }
+    .problem-card-desc { font-size: 12px; color: #7f1d1d; line-height: 1.5; }
+
+    /* FLOW */
+    .flow {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+      padding: 20px;
+      background: var(--off-white);
+      border-radius: var(--radius);
+    }
+    .flow-step {
+      background: var(--white);
+      border: 1px solid var(--border);
+      border-radius: 7px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 500;
+    }
+    .flow-arrow { color: var(--ink-light); font-size: 14px; }
+
+    /* RESULT CARDS */
+    .result-cards {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 12px;
+      margin: 24px 0;
+    }
+    .result-card {
+      background: var(--green-light);
+      border-radius: var(--radius);
+      padding: 20px;
+    }
+    .result-card-value {
+      font-size: 28px;
+      font-weight: 700;
+      color: var(--green);
+      letter-spacing: -0.03em;
+      margin-bottom: 4px;
+    }
+    .result-card-label { font-size: 13px; color: var(--green); font-weight: 500; margin-bottom: 6px; }
+    .result-card-desc { font-size: 12px; color: #065f46; line-height: 1.5; }
+
+    /* INSIGHT */
+    .insight-box {
+      background: var(--accent-light);
+      border-radius: var(--radius);
+      padding: 24px;
+      margin-top: 32px;
+    }
+    .insight-label {
+      font-family: 'DM Mono', monospace;
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      margin-bottom: 8px;
+    }
+    .insight-text {
+      font-size: 16px;
+      color: var(--ink);
+      font-weight: 500;
+      line-height: 1.65;
+      letter-spacing: -0.01em;
+    }
+
+    /* BACK BUTTON */
+    .back-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 11px 22px;
+      border-radius: var(--radius);
+      font-size: 14px;
+      font-weight: 500;
+      text-decoration: none;
+      background: var(--off-white);
+      color: var(--ink);
+      border: 1px solid var(--border);
+      margin-top: 48px;
+      transition: background 0.2s;
+    }
+    .back-btn:hover { background: var(--tag-bg); }
+
+    @media (max-width: 640px) {
+      .problem-cards { grid-template-columns: 1fr; }
+      .result-cards { grid-template-columns: 1fr; }
+      .flow { flex-direction: column; align-items: flex-start; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="../index.html">ann.dev</a>
+  <a class="nav-back" href="../index.html">← 돌아가기</a>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <p class="hero-breadcrumb">
+    <a href="../index.html">Home</a> / Work Projects / AI 자동화
+  </p>
+  <h1>빌드 로그 AI 분석 대시보드</h1>
+  <p class="hero-desc">수십 MB 빌드 실패 로그를 사람이 직접 읽던 구조를 Claude API로 대체. 에러 원인 자동 분류부터 담당팀 라우팅, 반복 패턴 통계화까지.</p>
+  <div class="hero-meta">
+    <span class="meta-chip blue">Claude API</span>
+    <span class="meta-chip blue">GPT API</span>
+    <span class="meta-chip blue">Jenkins REST API</span>
+    <span class="meta-chip blue">Node.js</span>
+    <span class="meta-chip green">사내 실배포 운영 중</span>
+    <span class="meta-chip gray">2026</span>
+  </div>
+</div>
+
+<div class="content">
+
+  <!-- STEP 1: 문제 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number red">1</div>
+      <span class="step-name">Problem · 문제 상황</span>
+    </div>
+    <h2>수십 MB 로그를 사람이 직접 읽고 있었다</h2>
+    <p>게임 개발 프로젝트는 Jenkins 기반으로 하루에도 여러 번 빌드가 돌아갑니다. 빌드가 실패하면 담당자가 콘솔 로그를 직접 열어 원인을 찾아야 했는데, 로그 한 건이 수십 MB에 달하는 경우가 많았습니다.</p>
+
+    <div class="problem-cards">
+      <div class="problem-card">
+        <div class="problem-card-icon">⏱️</div>
+        <div class="problem-card-title">건당 30분+ 수동 분석</div>
+        <div class="problem-card-desc">에러 메시지가 로그 중간에 묻혀 있어 찾는 것 자체가 일이었습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">🔁</div>
+        <div class="problem-card-title">반복 에러인데 이력 없음</div>
+        <div class="problem-card-desc">같은 유형의 실패가 반복돼도 이력이 없어 매번 처음부터 분석했습니다</div>
+      </div>
+      <div class="problem-card">
+        <div class="problem-card-icon">📊</div>
+        <div class="problem-card-title">통계적 파악 불가</div>
+        <div class="problem-card-desc">어떤 팀, 어떤 빌드 머신에서 실패가 몰리는지 전혀 파악할 수 없었습니다</div>
+      </div>
+    </div>
+
+    <!-- 이미지 1: Teams 빌드 실패 알림 -->
+    <div class="img-block">
+      <img src="../images/build-log/01-teams-fail-alert.png" alt="Teams 빌드 실패 알림 — 에러 요약 28건" />
+      <div class="img-caption">Teams 채널에 날아오는 빌드 실패 알림. 28건의 에러 요약이 떠있지만 실제 원인 파악은 Jenkins 로그를 직접 열어야 했습니다.</div>
+    </div>
+
+    <!-- 이미지 2: Jenkins 원시 로그 -->
+    <div class="img-block">
+      <img src="../images/build-log/02-jenkins-raw-log.png" alt="Jenkins 수십 MB 원시 로그" />
+      <div class="img-caption">실제 Jenkins 콘솔 로그. "error" 키워드로 검색해도 5/12개가 분산되어 있어 전체 맥락을 파악하기 어렵습니다.</div>
+    </div>
+  </div>
+
+  <!-- STEP 2: 해결 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number blue">2</div>
+      <span class="step-name">Solution · 해결 방법</span>
+    </div>
+    <h2>Claude API로 로그를 구조화된 데이터로 변환</h2>
+    <p>단순 키워드 검색(grep)으로는 "왜 났는지", "어느 팀에 전달할지"를 판단할 수 없었습니다. 로그를 읽고 원인을 파악하는 건 결국 자연어 이해가 필요한 작업이었고, Claude API가 이 역할에 적합했습니다.</p>
+
+    <p>Claude API에게 시킨 것은 단순합니다. 로그를 받아서 아래 항목을 JSON으로 반환하도록 설계했습니다.</p>
+
+    <div class="flow">
+      <div class="flow-step">빌드 실패 발생</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">로그 파일 업로드</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">Claude API 분석</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">JSON 구조화</div>
+      <span class="flow-arrow">→</span>
+      <div class="flow-step">대시보드 저장</div>
+    </div>
+
+    <p>설계 원칙은 하나였습니다. <strong>확실하지 않으면 null로 남긴다.</strong> AI가 모르면 모른다고 하도록 설계했고, 잘못된 확신보다 정직한 불확실성이 낫다고 판단했습니다.</p>
+
+    <!-- 이미지 3: Claude Code 분석 화면 -->
+    <div class="img-block">
+      <img src="../images/build-log/04-claude-analysis.png" alt="Claude Code로 빌드 로그 실시간 분석" />
+      <div class="img-caption">Claude Code에서 실제 빌드 로그를 분석하는 장면. P4 명령어 파싱 실패 원인을 추적하고 엔진팀 확인을 요청하는 조치까지 도출했습니다.</div>
+    </div>
+
+    <!-- 이미지 4: 분석 결과 입력 폼 -->
+    <div class="img-block">
+      <img src="../images/build-log/03-analysis-input-form.png" alt="빌드 로그 분석 대시보드 — 분석 결과 입력 폼" />
+      <div class="img-caption">Claude 분석 결과 JSON을 붙여넣으면 에러 카테고리·담당팀·심각도·조치 방법이 자동으로 폼에 채워집니다.</div>
+    </div>
+  </div>
+
+  <!-- STEP 3: 결과 -->
+  <div class="step-section">
+    <div class="step-label">
+      <div class="step-number green">3</div>
+      <span class="step-name">Result · 결과</span>
+    </div>
+    <h2>반복 패턴이 보이기 시작했다</h2>
+    <p>이력이 쌓이면서 개별로 볼 때는 "또 났네" 하고 넘기던 에러들이 통계로 보이기 시작했습니다. 특정 빌드 머신에서 인프라 에러가 반복되는 것을 발견했고, 이는 하드웨어 점검이 필요한 신호였습니다.</p>
+
+    <div class="result-cards">
+      <div class="result-card">
+        <div class="result-card-value">44건</div>
+        <div class="result-card-label">누적 분석 이력</div>
+        <div class="result-card-desc">이력 검색으로 "저번에 이 에러 어떻게 해결했지?"를 바로 찾을 수 있게 됐습니다</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">TOP 5</div>
+        <div class="result-card-label">반복 에러 패턴 식별</div>
+        <div class="result-card-desc">Build.cs 의존성 누락, 헤더 세미콜론 누락 등 반복 패턴을 수치로 파악</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">자동</div>
+        <div class="result-card-label">담당팀 라우팅</div>
+        <div class="result-card-desc">엔진팀·프로그래밍팀·연출팀·아티스트 중 자동으로 담당팀 추천</div>
+      </div>
+      <div class="result-card">
+        <div class="result-card-value">실배포</div>
+        <div class="result-card-label">사내 운영 중</div>
+        <div class="result-card-desc">실제 팀이 사용하는 환경에 배포되어 현재도 운영 중입니다</div>
+      </div>
+    </div>
+
+    <!-- 이미지 5: 대시보드 통계 -->
+    <div class="img-block">
+      <img src="../images/build-log/05-dashboard-stats.png" alt="빌드 로그 분석 대시보드 — 통계 화면" />
+      <div class="img-caption">대시보드 통계 화면. 에러 카테고리별 빈도, 반복 에러 TOP 5, 빌드 머신별 실패 빈도, 월별 트렌드를 한눈에 파악할 수 있습니다. 인프라 에러가 가장 많고 Dev-Build 머신에 실패가 집중됨을 확인했습니다.</div>
+    </div>
+
+    <!-- 이미지 6: 상세 분석 결과 -->
+    <div class="img-block">
+      <img src="../images/build-log/06-detail-result.png" alt="빌드 로그 분석 — 상세 결과 및 조치 기록" />
+      <div class="img-caption">개별 빌드 분석 상세 화면. 에러 원인, 담당팀, 조치 방법, 해결 유형까지 기록되어 동일 에러 재발 시 즉시 참조할 수 있습니다.</div>
+    </div>
+
+    <div class="insight-box">
+      <div class="insight-label">Insight</div>
+      <div class="insight-text">
+        "AI 도구를 잘 만들려면 코딩 실력보다 문제 정의 능력이 먼저입니다.<br>
+        어떤 정보를 추출할지, 불확실할 때 어떻게 처리할지를 먼저 정의해야 AI가 제대로 동작합니다.<br>
+        현업을 아는 PM이 이 부분을 가장 잘 할 수 있다고 생각합니다."
+      </div>
+    </div>
+  </div>
+
+  <a class="back-btn" href="../index.html">← 프로젝트 목록으로</a>
+
+</div>
+
+</body>
+</html>
