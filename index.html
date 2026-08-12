@@ -99,6 +99,26 @@
       margin-bottom: 16px;
     }
 
+    /* DETAILS (collapsed depth section) */
+    .depth-details {
+      margin-bottom: 32px;
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 4px 20px;
+    }
+    .depth-details summary {
+      cursor: pointer;
+      font-size: 13px;
+      color: var(--ink-mid);
+      padding: 14px 0;
+      list-style: none;
+      user-select: none;
+    }
+    .depth-details summary::-webkit-details-marker { display: none; }
+    .depth-details summary::before { content: '▸ '; color: var(--ink-light); }
+    .depth-details[open] summary::before { content: '▾ '; }
+    .depth-details .arch-diagram-wrap { background: transparent; padding: 8px 0 24px; }
+
     /* PART HEADER */
     .part-header {
       display: flex; align-items: center; gap: 12px;
@@ -347,7 +367,7 @@
         <div class="project-title">빌드 로그 AI 분석 대시보드</div>
         <span class="project-badge">Claude API</span>
       </div>
-      <p class="project-desc">수십 MB 빌드 실패 로그를 사람이 직접 읽던 구조를 AI로 대체. 에러 카테고리·담당팀·심각도 자동 분류, 반복 패턴 통계화, 이력 검색.</p>
+      <p class="project-desc">빌드 실패 시 담당자가 로그를 직접 읽고 원인을 찾는 데 건당 30분 이상 걸리던 문제를 발견했습니다. 실제 반복되는 실패 유형을 분석해 에러 카테고리·담당팀·심각도 분류 기준을 설계하고, Claude/GPT API 기반 자동 분류 파이프라인으로 구현해 사내 배포했습니다. 이후 쌓인 반복 패턴 통계는 하드웨어 결함 같은 잠재 이슈를 사전에 발견하는 데도 쓰이고 있습니다.</p>
       <div class="project-meta">
         <div class="project-meta-item"><span class="meta-label">문제</span><span class="meta-value">건당 30분+ 수동 분석</span></div>
         <div class="project-meta-item"><span class="meta-label">기술</span><span class="meta-value">Claude / GPT / Copilot API, Jenkins REST API, Node.js</span></div>
@@ -544,109 +564,112 @@
     </div>
   </div>
 
-  <!-- 국내 릴리즈 프로세스 -->
-  <div class="arch-diagram-wrap">
-    <p class="arch-diagram-title">국내 Release Lifecycle</p>
-    <svg width="100%" viewBox="0 0 680 536" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-      <title>국내 Release Lifecycle</title>
-      <desc>국내 릴리즈 트랙의 각 단계와 담당 역할</desc>
-      <defs>
-        <marker id="arrow-dom" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/>
-        </marker>
-      </defs>
+  <!-- 릴리즈 프로세스 다이어그램: depth 처리 (기본 접힘) -->
+  <details class="depth-details">
+    <summary>릴리즈 파이프라인 상세 보기 (국내 / 글로벌 QA 프로세스 다이어그램)</summary>
 
-      <line x1="250" y1="116" x2="250" y2="136" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
-      <line x1="250" y1="192" x2="250" y2="212" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
-      <line x1="250" y1="268" x2="250" y2="288" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
-      <line x1="250" y1="344" x2="250" y2="364" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
-      <line x1="250" y1="420" x2="250" y2="440" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
-      <line x1="400" y1="164" x2="460" y2="164" stroke="#5b3fd4" stroke-width="1" marker-end="url(#arrow-dom)"/>
+    <div class="arch-diagram-wrap">
+      <p class="arch-diagram-title">국내 Release Lifecycle</p>
+      <svg width="100%" viewBox="0 0 680 536" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <title>국내 Release Lifecycle</title>
+        <desc>국내 릴리즈 트랙의 각 단계와 담당 역할</desc>
+        <defs>
+          <marker id="arrow-dom" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/>
+          </marker>
+        </defs>
 
-      <rect x="100" y="60" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="250" y="82" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Dev</text>
-      <text x="250" y="102" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
+        <line x1="250" y1="116" x2="250" y2="136" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
+        <line x1="250" y1="192" x2="250" y2="212" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
+        <line x1="250" y1="268" x2="250" y2="288" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
+        <line x1="250" y1="344" x2="250" y2="364" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
+        <line x1="250" y1="420" x2="250" y2="440" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-dom)"/>
+        <line x1="400" y1="164" x2="460" y2="164" stroke="#5b3fd4" stroke-width="1" marker-end="url(#arrow-dom)"/>
 
-      <rect x="100" y="136" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="250" y="158" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">DQA</text>
-      <text x="250" y="178" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">별도 빌드로 사내 FGT 분기</text>
+        <rect x="100" y="60" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="250" y="82" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Dev</text>
+        <text x="250" y="102" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
 
-      <rect x="100" y="212" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="250" y="234" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">TQA</text>
-      <text x="250" y="254" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달</text>
+        <rect x="100" y="136" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="250" y="158" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">DQA</text>
+        <text x="250" y="178" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">별도 빌드로 사내 FGT 분기</text>
 
-      <rect x="100" y="288" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="250" y="310" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">iQA</text>
-      <text x="250" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
+        <rect x="100" y="212" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="250" y="234" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">TQA</text>
+        <text x="250" y="254" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달</text>
 
-      <rect x="100" y="364" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
-      <text x="250" y="386" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">RC</text>
-      <text x="250" y="406" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">Stage망 검증</text>
+        <rect x="100" y="288" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="250" y="310" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">iQA</text>
+        <text x="250" y="330" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
 
-      <rect x="100" y="440" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
-      <text x="250" y="462" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Live</text>
-      <text x="250" y="482" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
+        <rect x="100" y="364" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+        <text x="250" y="386" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">RC</text>
+        <text x="250" y="406" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">Stage망 검증</text>
 
-      <rect x="460" y="142" width="170" height="44" rx="8" fill="#f0eeff" stroke="#5b3fd4" stroke-width="0.5"/>
-      <text x="545" y="168" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#5b3fd4">DQA_1 → 사내 FGT</text>
-    </svg>
-    <p style="text-align:center;font-size:13px;color:#444444;margin-top:12px;line-height:1.6;">
-      Dev부터 Live까지 전 단계에서 유관부서 일정 조율, QA 커뮤니케이션, 배포 확인, 마켓 심사·이슈 대응을 직접 담당했습니다.
-    </p>
-  </div>
+        <rect x="100" y="440" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+        <text x="250" y="462" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Live</text>
+        <text x="250" y="482" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
 
-  <!-- 글로벌 릴리즈 프로세스 -->
-  <div class="arch-diagram-wrap">
-    <p class="arch-diagram-title">글로벌 Release Lifecycle</p>
-    <svg width="100%" viewBox="0 0 680 636" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
-      <title>글로벌 Release Lifecycle</title>
-      <desc>글로벌 릴리즈 트랙의 각 단계와 담당 역할, Dev망은 국내와 같은 망이지만 빌드와 서버는 별도로 운영됨</desc>
-      <defs>
-        <marker id="arrow-glo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
-          <path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/>
-        </marker>
-      </defs>
+        <rect x="460" y="142" width="170" height="44" rx="8" fill="#f0eeff" stroke="#5b3fd4" stroke-width="0.5"/>
+        <text x="545" y="168" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#5b3fd4">DQA_1 → 사내 FGT</text>
+      </svg>
+      <p style="text-align:center;font-size:13px;color:#444444;margin-top:12px;line-height:1.6;">
+        Dev부터 Live까지 전 단계에서 유관부서 일정 조율, QA 커뮤니케이션, 배포 확인, 마켓 심사·이슈 대응을 직접 담당했습니다.
+      </p>
+    </div>
 
-      <line x1="340" y1="116" x2="340" y2="140" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
-      <line x1="340" y1="196" x2="340" y2="220" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
-      <line x1="340" y1="276" x2="340" y2="300" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
-      <line x1="340" y1="356" x2="340" y2="380" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
-      <line x1="340" y1="436" x2="340" y2="460" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
-      <line x1="340" y1="516" x2="340" y2="540" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+    <div class="arch-diagram-wrap">
+      <p class="arch-diagram-title">글로벌 Release Lifecycle</p>
+      <svg width="100%" viewBox="0 0 680 636" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+        <title>글로벌 Release Lifecycle</title>
+        <desc>글로벌 릴리즈 트랙의 각 단계와 담당 역할, Dev망은 국내와 같은 망이지만 빌드와 서버는 별도로 운영됨</desc>
+        <defs>
+          <marker id="arrow-glo" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse">
+            <path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/>
+          </marker>
+        </defs>
 
-      <rect x="130" y="60" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="340" y="82" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Dev</text>
-      <text x="340" y="102" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
+        <line x1="340" y1="116" x2="340" y2="140" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+        <line x1="340" y1="196" x2="340" y2="220" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+        <line x1="340" y1="276" x2="340" y2="300" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+        <line x1="340" y1="356" x2="340" y2="380" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+        <line x1="340" y1="436" x2="340" y2="460" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
+        <line x1="340" y1="516" x2="340" y2="540" stroke="#b0b0a8" stroke-width="1" marker-end="url(#arrow-glo)"/>
 
-      <rect x="130" y="140" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="340" y="162" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Build</text>
-      <text x="340" y="182" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">Jenkins 빌드 관리 (별도 빌드)</text>
+        <rect x="130" y="60" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="340" y="82" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Dev</text>
+        <text x="340" y="102" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
 
-      <rect x="130" y="220" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="340" y="242" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">TQA</text>
-      <text x="340" y="262" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달 (별도 서버)</text>
+        <rect x="130" y="140" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="340" y="162" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">Build</text>
+        <text x="340" y="182" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">Jenkins 빌드 관리 (별도 빌드)</text>
 
-      <rect x="130" y="300" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
-      <text x="340" y="322" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">iQA</text>
-      <text x="340" y="342" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
+        <rect x="130" y="220" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="340" y="242" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">TQA</text>
+        <text x="340" y="262" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달 (별도 서버)</text>
 
-      <rect x="130" y="380" width="420" height="56" rx="10" fill="#fdf3e0" stroke="#b45309" stroke-width="1"/>
-      <text x="340" y="402" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#92400e">FGT (1회성)</text>
-      <text x="340" y="422" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#92400e">G.round 통해 실제 유저 모집 · 170개국</text>
+        <rect x="130" y="300" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+        <text x="340" y="322" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#1a56db">iQA</text>
+        <text x="340" y="342" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
 
-      <rect x="130" y="460" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
-      <text x="340" y="482" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Clone</text>
-      <text x="340" y="502" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">Stage망 분리 구성</text>
+        <rect x="130" y="380" width="420" height="56" rx="10" fill="#fdf3e0" stroke="#b45309" stroke-width="1"/>
+        <text x="340" y="402" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#92400e">FGT (1회성)</text>
+        <text x="340" y="422" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#92400e">G.round 통해 실제 유저 모집 · 170개국</text>
 
-      <rect x="130" y="540" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
-      <text x="340" y="562" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Live</text>
-      <text x="340" y="582" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
-    </svg>
-    <p style="text-align:center;font-size:13px;color:#444444;margin-top:12px;line-height:1.6;">
-      170개국 대상 글로벌 FGT 운영을 포함해 Dev부터 Live까지 전 단계의 일정 조율과 배포 검증을 주도했습니다.
-    </p>
-  </div>
-  
+        <rect x="130" y="460" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+        <text x="340" y="482" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Clone</text>
+        <text x="340" y="502" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">Stage망 분리 구성</text>
+
+        <rect x="130" y="540" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+        <text x="340" y="562" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="14" fill="#0d7a4e">Live</text>
+        <text x="340" y="582" text-anchor="middle" font-family="DM Sans, sans-serif" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
+      </svg>
+      <p style="text-align:center;font-size:13px;color:#444444;margin-top:12px;line-height:1.6;">
+        170개국 대상 글로벌 FGT 운영을 포함해 Dev부터 Live까지 전 단계의 일정 조율과 배포 검증을 주도했습니다.
+      </p>
+    </div>
+  </details>
+
   <!-- PERSONAL PROJECTS -->
   <div class="part-header">
     <span class="part-badge personal">Personal</span>
