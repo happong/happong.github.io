@@ -228,6 +228,11 @@
   
     /* PDF / 인쇄용 스타일 */
     @media print {
+      * {
+        -webkit-print-color-adjust: exact !important;
+        print-color-adjust: exact !important;
+        color-adjust: exact !important;
+      }
       nav { display: none !important; }
       .pdf-btn { display: none !important; }
       .hero-cta a[href^="#"] { display: none !important; }
