@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>이력서 — Ann (Haeun Kim)</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff; --off-white: #f7f7f5; --ink: #111111;
+      --ink-mid: #444444; --ink-light: #888888; --accent: #1a56db;
+      --accent-light: #e8effe; --border: #e4e4e0; --tag-bg: #f0f0ec;
+      --radius: 10px; --max: 760px;
+    }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
+
+    nav {
+      position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px;
+      display: flex; align-items: center; justify-content: space-between;
+    }
+    .nav-logo { font-family: 'DM Mono', monospace; font-size: 14px; color: var(--ink); text-decoration: none; }
+    .nav-links { display: flex; gap: 20px; list-style: none; }
+    .nav-links a { font-size: 13px; color: var(--ink-mid); text-decoration: none; padding-bottom: 2px; }
+    .nav-links a:hover { color: var(--accent); }
+    .nav-links a.active { color: var(--ink); font-weight: 600; border-bottom: 2px solid var(--ink); }
+
+    .hero { max-width: var(--max); margin: 0 auto; padding: 110px 24px 32px; }
+    .hero-eyebrow { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--accent); letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 14px; }
+    .hero h1 { font-size: clamp(26px, 5vw, 36px); font-weight: 600; letter-spacing: -0.02em; margin-bottom: 6px; }
+    .hero-sub { font-size: 14px; color: var(--ink-mid); }
+    .hero-cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 20px; }
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 9px 18px; border-radius: var(--radius); font-size: 13px; font-weight: 500; text-decoration: none; transition: all 0.2s; cursor: pointer; font-family: inherit; border: 1px solid var(--border); background: var(--off-white); color: var(--ink); }
+    .btn:hover { background: var(--tag-bg); }
+
+    .divider { max-width: var(--max); margin: 0 auto; padding: 0 24px; border-top: 1px solid var(--border); }
+    section { max-width: var(--max); margin: 0 auto; padding: 36px 24px; }
+    .section-title { font-size: 13px; font-weight: 700; letter-spacing: 0.02em; margin-bottom: 18px; padding-bottom: 8px; border-bottom: 2px solid var(--ink); display: inline-block; }
+
+    table.fact-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.fact-table th, table.fact-table td { text-align: left; padding: 10px 12px; border: 1px solid var(--border); vertical-align: top; }
+    table.fact-table th { background: var(--off-white); font-weight: 600; color: var(--ink-mid); width: 110px; white-space: nowrap; }
+    table.fact-table td a { color: var(--accent); text-decoration: none; }
+
+    table.career-table { width: 100%; border-collapse: collapse; font-size: 13.5px; }
+    table.career-table th { background: var(--off-white); font-weight: 600; color: var(--ink-mid); text-align: left; padding: 10px 12px; border: 1px solid var(--border); }
+    table.career-table td { padding: 10px 12px; border: 1px solid var(--border); vertical-align: top; }
+    table.career-table td.period { font-family: 'DM Mono', monospace; font-size: 12px; color: var(--ink-light); white-space: nowrap; }
+
+    .skill-chips { display: flex; flex-wrap: wrap; gap: 6px; }
+    .skill-chip { font-size: 12px; background: var(--off-white); color: var(--ink); padding: 4px 11px; border-radius: 20px; border: 1px solid var(--border); }
+    .skill-row { display: flex; gap: 16px; margin-bottom: 12px; align-items: baseline; flex-wrap: wrap; }
+    .skill-row-label { font-family: 'DM Mono', monospace; font-size: 11px; color: var(--ink-light); width: 80px; flex-shrink: 0; }
+
+    footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--ink-light); }
+
+    @media (max-width: 640px) {
+      .nav-links { gap: 12px; }
+      table.fact-table th { width: 90px; font-size: 12px; }
+      table.fact-table td, table.career-table td, table.career-table th { font-size: 12.5px; padding: 8px; }
+      .skill-row { flex-direction: column; gap: 4px; }
+      .skill-row-label { width: auto; }
+    }
+
+    @media print {
+      * { -webkit-print-color-adjust: exact !important; print-color-adjust: exact !important; color-adjust: exact !important; }
+      nav { display: none !important; }
+      .pdf-btn { display: none !important; }
+      table.fact-table, table.career-table { page-break-inside: avoid; break-inside: avoid; }
+      .hero { padding-top: 20px; }
+    }
+  </style>
+</head>
+<body>
+
+<nav>
+  <a class="nav-logo" href="index.html">ann.dev</a>
+  <ul class="nav-links">
+    <li><a href="index.html">포트폴리오</a></li>
+    <li><a href="resume.html" class="active">이력서</a></li>
+    <li><a href="career.html">경력기술서</a></li>
+  </ul>
+</nav>
+
+<div class="hero">
+  <p class="hero-eyebrow">Resume</p>
+  <h1>김하은 (Kim HaEun)</h1>
+  <p class="hero-sub">개발 PM · eun1009sin@gmail.com</p>
+  <div class="hero-cta">
+    <button class="btn pdf-btn" onclick="window.print()" type="button">PDF로 저장</button>
+    <a class="btn" href="career.html">경력기술서 자세히 보기 →</a>
+    <a class="btn" href="index.html">포트폴리오 보기 →</a>
+  </div>
+</div>
+
+<div class="divider"></div>
+
+<section id="info">
+  <p class="section-title">인적사항</p>
+  <table class="fact-table">
+    <tr><th>성명</th><td>김하은 (Kim HaEun)</td></tr>
+    <tr><th>이메일</th><td><a href="mailto:eun1009sin@gmail.com">eun1009sin@gmail.com</a></td></tr>
+    <tr><th>포트폴리오</th><td><a href="https://happong.github.io" target="_blank">happong.github.io</a></td></tr>
+    <tr><th>GitHub</th><td><a href="https://github.com/happong/AI_Workflow_Automation_Tools" target="_blank">github.com/happong</a></td></tr>
+    <tr><th>Blog</th><td><a href="https://blog.naver.com/hahae_dv" target="_blank">blog.naver.com/hahae_dv</a></td></tr>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<section id="education">
+  <p class="section-title">학력사항</p>
+  <table class="career-table">
+    <thead>
+      <tr><th style="width:160px;">기간</th><th>학교 / 학과</th><th style="width:120px;">비고</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="period">2021.03 ~ 재학 중</td>
+        <td>방송통신대학교 · 컴퓨터과학과</td>
+        <td>2학년 1학기 완료</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<section id="career">
+  <p class="section-title">경력사항</p>
+  <table class="career-table">
+    <thead>
+      <tr>
+        <th style="width:150px;">기간</th>
+        <th>회사명</th>
+        <th>담당업무</th>
+        <th style="width:110px;">직위</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="period">2022.07 ~ 재직 중</td>
+        <td>㈜NC</td>
+        <td>빌드·릴리즈 파이프라인 운영, 글로벌 일정 관리, LLM 활용 서비스 개발</td>
+        <td>개발 PM</td>
+      </tr>
+      <tr>
+        <td class="period">2019.06 ~ 2021.07</td>
+        <td>㈜휴넥트</td>
+        <td>사내 전산망 IT 서비스데스크 운영</td>
+        <td>사원</td>
+      </tr>
+      <tr>
+        <td class="period">2016.11 ~ 2017.06</td>
+        <td>㈜오케이저축은행(아프로파이낸셜)</td>
+        <td>햇살론 대출 상담 및 서류 심사, 여신 사후 관리</td>
+        <td>여신 담당</td>
+      </tr>
+      <tr>
+        <td class="period">2015.03 ~ 2016.11</td>
+        <td>㈜미즈사랑대부(아프로파이낸셜) / ㈜BSHR 파견</td>
+        <td>인바운드 대출 상담, CRM 기반 연체 관리</td>
+        <td>대출 상담·CRM 담당</td>
+      </tr>
+    </tbody>
+  </table>
+  <p style="font-size:12.5px;color:var(--ink-light);margin-top:12px;">각 경력의 상세 업무·문제 해결 과정·성과는 <a href="career.html" style="color:var(--accent);">경력기술서</a>에서 확인하실 수 있습니다.</p>
+</section>
+
+<div class="divider"></div>
+
+<section id="training">
+  <p class="section-title">교육 이수</p>
+  <table class="career-table">
+    <thead>
+      <tr><th style="width:160px;">기간</th><th>과정명</th></tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td class="period">2021.10 ~ 2022.04</td>
+        <td>메타버스 기반 게임 콘텐츠 기획과정 — 멀티캠퍼스</td>
+      </tr>
+      <tr>
+        <td class="period">2020.05 ~ 2020.07</td>
+        <td>반응형 웹디 &amp; 웹퍼블리셔 과정 — 이젠 컴퓨터학원</td>
+      </tr>
+    </tbody>
+  </table>
+</section>
+
+<div class="divider"></div>
+
+<section id="skills">
+  <p class="section-title">보유 기술</p>
+  <div class="skill-row">
+    <span class="skill-row-label">AI / API</span>
+    <div class="skill-chips">
+      <span class="skill-chip">Claude API</span><span class="skill-chip">Gemini API</span><span class="skill-chip">GPT API</span>
+    </div>
+  </div>
+  <div class="skill-row">
+    <span class="skill-row-label">빌드/배포</span>
+    <div class="skill-chips">
+      <span class="skill-chip">Jenkins</span><span class="skill-chip">Perforce (P4V)</span><span class="skill-chip">Git / GitHub</span>
+    </div>
+  </div>
+  <div class="skill-row">
+    <span class="skill-row-label">개발</span>
+    <div class="skill-chips">
+      <span class="skill-chip">Node.js</span><span class="skill-chip">Python</span><span class="skill-chip">Next.js</span><span class="skill-chip">HTML/CSS/JS</span><span class="skill-chip">Excel VBA</span>
+    </div>
+  </div>
+  <div class="skill-row">
+    <span class="skill-row-label">협업 도구</span>
+    <div class="skill-chips">
+      <span class="skill-chip">Confluence API</span><span class="skill-chip">Teams Webhook</span><span class="skill-chip">Jira</span><span class="skill-chip">Supabase</span>
+    </div>
+  </div>
+</section>
+
+<footer>
+  © 2026 Ann (Haeun Kim) · Built with HTML/CSS · Hosted on GitHub Pages
+</footer>
+
+</body>
+</html>
