@@ -43,6 +43,8 @@ h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px;}
 .meta-value{font-size:13px;color:var(--ink);font-weight:500;}
 .project-result{background:var(--accent-light);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:12px;}
 .project-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.shot-grid img{width:100%;display:block;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);}
 .project-tag{font-size:12px;background:var(--tag-bg);color:var(--ink-mid);padding:3px 10px;border-radius:20px;}
 details.depth{margin-bottom:16px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 20px;}
 details.depth summary{cursor:pointer;font-size:13px;color:var(--ink-mid);padding:14px 0;}
@@ -142,6 +144,10 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-si
 <div class="project-card">
 <div class="project-header"><div class="project-title">빌드 로그 AI 분석 대시보드</div><span class="project-badge">Claude API</span></div>
 <p class="project-desc">빌드 실패 시 담당자가 로그를 직접 읽고 원인을 찾는 데 건당 30분 이상 걸리던 문제를 발견했습니다. 실제 반복되는 실패 유형을 분석해 에러 카테고리·담당팀·심각도 분류 기준을 설계하고, Claude/GPT API 기반 자동 분류 파이프라인으로 구현해 사내 배포했습니다.</p>
+<div class="shot-grid">
+<img src="../images/build-log/02-jenkins-raw-log.png" alt="Jenkins 원본 빌드 실패 로그 — 수작업 분석 대상" loading="lazy" />
+<img src="../images/build-log/05-dashboard-stats.png" alt="빌드 로그 AI 분석 대시보드 — 에러 분류·통계 화면" loading="lazy" />
+</div>
 <div class="project-result">✦ 분석 시간 대폭 단축, 반복 에러 패턴 통계화로 하드웨어 결함 사전 감지 가능</div>
 <div class="project-tags"><span class="project-tag">Claude API</span><span class="project-tag">GPT API</span></div>
 </div>
@@ -149,6 +155,10 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-si
 <div class="project-card">
 <div class="project-header"><div class="project-title">SIE 공지 자동화 툴</div><span class="project-badge">Gemini API</span></div>
 <p class="project-desc">영문 개발 공지를 수작업으로 번역·전파하던 프로세스를 AI로 완전 자동화. Confluence 갱신 + Teams 발송까지 원클릭.</p>
+<div class="shot-grid">
+<img src="../images/sie-automation/01-outlook-notices.png" alt="Outlook으로 수신되는 영문 개발 공지 원본" loading="lazy" />
+<img src="../images/sie-automation/07-confluence-table.png" alt="자동화 후 Confluence에 정리된 변경 이력 테이블" loading="lazy" />
+</div>
 <div class="project-result">✦ 공지 전파 수작업 100% 제거, 유사도 기반 중복 감지</div>
 <div class="project-tags"><span class="project-tag">Gemini API</span><span class="project-tag">Confluence</span></div>
 </div>
