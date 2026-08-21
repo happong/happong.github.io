@@ -35,6 +35,8 @@ h2{font-size:22px;font-weight:600;letter-spacing:-.02em;margin-bottom:16px;}
 .project-title{font-size:16px;font-weight:600;}
 .project-badge{font-family:'DM Mono',monospace;font-size:11px;background:var(--accent-light);color:var(--accent);padding:3px 9px;border-radius:20px;}
 .project-desc{font-size:13px;color:var(--ink-mid);margin-bottom:14px;line-height:1.7;}
+.shot-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:14px;}
+.shot-grid img{width:100%;display:block;border-radius:8px;border:1px solid var(--border);box-shadow:0 2px 8px rgba(0,0,0,0.06);}
 .project-result{background:var(--accent-light);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--accent);font-weight:500;}
 .career-item{display:grid;grid-template-columns:150px 1fr;gap:16px;padding:14px 0;border-bottom:1px solid var(--border);}
 .career-item:last-child{border-bottom:none;}
@@ -102,6 +104,10 @@ footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-si
 <div class="project-card">
 <div class="project-header"><div class="project-title">빌드 로그 AI 분석 대시보드</div><span class="project-badge">Claude API</span></div>
 <p class="project-desc">건당 30분+ 걸리던 수동 로그 분석 문제를 발견하고, 반복 실패 유형을 분석해 분류 기준을 직접 설계·구현했습니다. 반복되는 패턴을 통계화해 잠재 결함을 사전에 발견하는 데도 활용 중입니다 — 제조·설비 도메인의 불량 분석 업무와 접근 방식이 유사합니다.</p>
+<div class="shot-grid">
+<img src="../images/build-log/02-jenkins-raw-log.png" alt="Jenkins 원본 빌드 실패 로그" loading="lazy" />
+<img src="../images/build-log/05-dashboard-stats.png" alt="AI 분석 대시보드 — 에러 분류·통계 화면" loading="lazy" />
+</div>
 <div class="project-result">✦ 분석 시간 대폭 단축, 반복 패턴 통계화로 사전 감지 가능</div>
 </div>
 <div class="project-card">
