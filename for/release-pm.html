@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>김하은 — Technical PM / Release Engineering</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--white:#fff;--off-white:#f7f7f5;--ink:#111;--ink-mid:#444;--ink-light:#888;
+--accent:#1a56db;--accent-light:#e8effe;--accent-green:#e6f9f0;--accent-green-text:#0d7a4e;
+--accent-purple:#f0eeff;--accent-purple-text:#5b3fd4;--border:#e4e4e0;--tag-bg:#f0f0ec;
+--radius:10px;--max:820px;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 40px;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-size:clamp(28px,5vw,40px);font-weight:600;letter-spacing:-.02em;margin-bottom:16px;}
+.hero-desc{font-size:16px;color:var(--ink-mid);line-height:1.75;margin-bottom:24px;max-width:600px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-size:13px;background:var(--tag-bg);color:var(--ink-mid);padding:5px 12px;border-radius:20px;}
+.tag.accent{background:var(--accent-light);color:var(--accent);}
+.divider{max-width:var(--max);margin:0 auto;padding:0 24px;border-top:1px solid var(--border);}
+section{max-width:var(--max);margin:0 auto;padding:56px 24px;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;}
+h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px;}
+.strength-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.strength-card{background:var(--off-white);border-radius:var(--radius);padding:22px 18px;}
+.strength-icon{font-size:20px;margin-bottom:10px;}
+.strength-title{font-size:14px;font-weight:600;margin-bottom:8px;}
+.strength-desc{font-size:13px;color:var(--ink-mid);line-height:1.6;}
+.project-list{display:flex;flex-direction:column;gap:16px;margin-bottom:16px;}
+.project-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;}
+.project-header{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.project-title{font-size:16px;font-weight:600;}
+.project-badge{font-family:'DM Mono',monospace;font-size:11px;background:var(--accent-light);color:var(--accent);padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.project-desc{font-size:13px;color:var(--ink-mid);margin-bottom:14px;line-height:1.7;}
+.project-meta{display:flex;gap:20px;margin-bottom:12px;flex-wrap:wrap;}
+.meta-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-light);text-transform:uppercase;}
+.meta-value{font-size:13px;color:var(--ink);font-weight:500;}
+.project-result{background:var(--accent-light);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:12px;}
+.project-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.project-tag{font-size:12px;background:var(--tag-bg);color:var(--ink-mid);padding:3px 10px;border-radius:20px;}
+.arch-diagram-wrap{background:var(--off-white);border-radius:var(--radius);padding:32px 24px 24px;margin-bottom:24px;}
+.arch-diagram-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:16px;}
+.career-block{margin-bottom:32px;}
+.career-header{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
+.career-name{font-size:17px;font-weight:700;}
+.career-period{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-light);}
+.career-role{font-size:12px;background:var(--tag-bg);color:var(--ink-mid);padding:2px 10px;border-radius:20px;}
+.career-projects{display:flex;flex-direction:column;gap:10px;}
+.career-project-item{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);}
+.career-project-name{font-size:13px;font-weight:600;}
+.career-project-detail{font-size:13px;color:var(--ink-mid);line-height:1.6;}
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.skill-group{background:var(--off-white);border-radius:var(--radius);padding:20px;}
+.skill-group-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-chip{font-size:13px;background:var(--white);color:var(--ink);padding:4px 11px;border-radius:20px;border:1px solid var(--border);}
+.contact-box{background:var(--off-white);border-radius:var(--radius);padding:40px;text-align:center;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius);font-size:14px;font-weight:500;text-decoration:none;background:var(--ink);color:var(--white);}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:13px;color:var(--ink-light);}
+@media(max-width:640px){.strength-grid,.skill-grid{grid-template-columns:1fr;}.career-project-item{grid-template-columns:1fr;gap:4px;}}
+@media print{*{-webkit-print-color-adjust:exact!important;print-color-adjust:exact!important;}.project-card,.career-block,.strength-card{page-break-inside:avoid;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<p class="hero-eyebrow">Technical PM · Release Engineering</p>
+<h1><strong>김하은</strong> — 빌드·릴리즈 파이프라인을 설계하고 안정화하는 기술 PM</h1>
+<p class="hero-desc">
+Jenkins 기반 CI/CD 파이프라인 설계·운영, 글로벌 릴리즈 프로세스 관리, 유관부서 협업까지 — 대규모 라이브 서비스의 릴리즈 안정성을 책임져온 3년차 기술 PM입니다.
+</p>
+<div class="hero-tags">
+<span class="tag accent">CI/CD 파이프라인 설계</span>
+<span class="tag accent">빌드 리드타임 50% 단축</span>
+<span class="tag">100명 글로벌 프로젝트 SSOT</span>
+<span class="tag">170개국 FGT 운영</span>
+<span class="tag">금융 여신 실무 2.3년</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Core Strengths</p>
+<div class="strength-grid">
+<div class="strength-card">
+<div class="strength-icon">🔧</div>
+<div class="strength-title">기술 PM / 릴리즈 운영</div>
+<div class="strength-desc">Jenkins CI/CD 파이프라인 설계·운영, 빌드 리드타임 50% 단축. 100명 규모 글로벌 프로젝트 출시 및 170개국 FGT 운영 주도.</div>
+</div>
+<div class="strength-card">
+<div class="strength-icon">💰</div>
+<div class="strength-title">금융 도메인 이해</div>
+<div class="strength-desc">대출 심사, 연체 관리, 여신 프로세스 실무 2.3년. 프로세스의 병목과 예외 케이스를 현업에서 직접 체득했습니다.</div>
+</div>
+<div class="strength-card">
+<div class="strength-icon">🤖</div>
+<div class="strength-title">LLM 활용 자동화</div>
+<div class="strength-desc">Claude/Gemini API로 빌드 로그 분석, 공지 자동화 등 실무 자동화 서비스를 직접 설계·구현한 경험.</div>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Release Lifecycle</p>
+<h2>릴리즈 파이프라인 상세</h2>
+<p style="font-size:14px;color:var(--ink-mid);margin-bottom:24px;">국내·글로벌 두 트랙의 릴리즈 프로세스를 각 단계별로 직접 설계·운영했습니다.</p>
+
+<div class="arch-diagram-wrap">
+<p class="arch-diagram-title">국내 Release Lifecycle</p>
+<svg width="100%" viewBox="0 0 680 536" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+<defs><marker id="a1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/></marker></defs>
+<line x1="250" y1="116" x2="250" y2="136" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a1)"/>
+<line x1="250" y1="192" x2="250" y2="212" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a1)"/>
+<line x1="250" y1="268" x2="250" y2="288" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a1)"/>
+<line x1="250" y1="344" x2="250" y2="364" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a1)"/>
+<line x1="250" y1="420" x2="250" y2="440" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a1)"/>
+<line x1="400" y1="164" x2="460" y2="164" stroke="#5b3fd4" stroke-width="1" marker-end="url(#a1)"/>
+<rect x="100" y="60" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="250" y="82" text-anchor="middle" font-size="14" fill="#1a56db">Dev</text>
+<text x="250" y="102" text-anchor="middle" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
+<rect x="100" y="136" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="250" y="158" text-anchor="middle" font-size="14" fill="#1a56db">DQA</text>
+<text x="250" y="178" text-anchor="middle" font-size="12" fill="#1a56db">별도 빌드로 사내 FGT 분기</text>
+<rect x="100" y="212" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="250" y="234" text-anchor="middle" font-size="14" fill="#1a56db">TQA</text>
+<text x="250" y="254" text-anchor="middle" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달</text>
+<rect x="100" y="288" width="300" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="250" y="310" text-anchor="middle" font-size="14" fill="#1a56db">iQA</text>
+<text x="250" y="330" text-anchor="middle" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
+<rect x="100" y="364" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="250" y="386" text-anchor="middle" font-size="14" fill="#0d7a4e">RC</text>
+<text x="250" y="406" text-anchor="middle" font-size="12" fill="#0d7a4e">Stage망 검증</text>
+<rect x="100" y="440" width="300" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="250" y="462" text-anchor="middle" font-size="14" fill="#0d7a4e">Live</text>
+<text x="250" y="482" text-anchor="middle" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
+<rect x="460" y="142" width="170" height="44" rx="8" fill="#f0eeff" stroke="#5b3fd4" stroke-width="0.5"/>
+<text x="545" y="168" text-anchor="middle" font-size="12" fill="#5b3fd4">DQA_1 → 사내 FGT</text>
+</svg>
+</div>
+
+<div class="arch-diagram-wrap">
+<p class="arch-diagram-title">글로벌 Release Lifecycle</p>
+<svg width="100%" viewBox="0 0 680 636" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+<defs><marker id="a2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/></marker></defs>
+<line x1="340" y1="116" x2="340" y2="140" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<line x1="340" y1="196" x2="340" y2="220" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<line x1="340" y1="276" x2="340" y2="300" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<line x1="340" y1="356" x2="340" y2="380" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<line x1="340" y1="436" x2="340" y2="460" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<line x1="340" y1="516" x2="340" y2="540" stroke="#b0b0a8" stroke-width="1" marker-end="url(#a2)"/>
+<rect x="130" y="60" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="340" y="82" text-anchor="middle" font-size="14" fill="#1a56db">Dev</text>
+<text x="340" y="102" text-anchor="middle" font-size="12" fill="#1a56db">유관부서 마감·배포 일정 조율</text>
+<rect x="130" y="140" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="340" y="162" text-anchor="middle" font-size="14" fill="#1a56db">Build</text>
+<text x="340" y="182" text-anchor="middle" font-size="12" fill="#1a56db">Jenkins 빌드 관리 (별도 빌드)</text>
+<rect x="130" y="220" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="340" y="242" text-anchor="middle" font-size="14" fill="#1a56db">TQA</text>
+<text x="340" y="262" text-anchor="middle" font-size="12" fill="#1a56db">QA빌드 배포 및 이슈 전달 (별도 서버)</text>
+<rect x="130" y="300" width="420" height="56" rx="10" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="340" y="322" text-anchor="middle" font-size="14" fill="#1a56db">iQA</text>
+<text x="340" y="342" text-anchor="middle" font-size="12" fill="#1a56db">플랫폼별 배포 확인·QA 요청</text>
+<rect x="130" y="380" width="420" height="56" rx="10" fill="#fdf3e0" stroke="#b45309" stroke-width="1"/>
+<text x="340" y="402" text-anchor="middle" font-size="14" fill="#92400e">FGT (1회성)</text>
+<text x="340" y="422" text-anchor="middle" font-size="12" fill="#92400e">G.round 통해 실제 유저 모집 · 170개국</text>
+<rect x="130" y="460" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="340" y="482" text-anchor="middle" font-size="14" fill="#0d7a4e">Clone</text>
+<text x="340" y="502" text-anchor="middle" font-size="12" fill="#0d7a4e">Stage망 분리 구성</text>
+<rect x="130" y="540" width="420" height="56" rx="10" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="340" y="562" text-anchor="middle" font-size="14" fill="#0d7a4e">Live</text>
+<text x="340" y="582" text-anchor="middle" font-size="12" fill="#0d7a4e">마켓 심사·CDN·이슈 대응</text>
+</svg>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Projects</p>
+<h2>빌드 / 릴리즈 PM 프로젝트</h2>
+
+<div class="project-list">
+<div class="project-card">
+<div class="project-header"><div class="project-title">CI/CD 파이프라인 최적화</div><span class="project-badge">Jenkins</span></div>
+<p class="project-desc">Dev/QA 빌드가 단일 파이프라인에서 병렬 실행되며 리소스 충돌·빌드 실패가 반복되던 문제를 데이터 기반으로 분석해 구조 재설계.</p>
+<div class="project-meta">
+<div><span class="meta-label">문제</span><br><span class="meta-value">빌드 실패 반복, 리소스 충돌</span></div>
+<div><span class="meta-label">해결</span><br><span class="meta-value">Dev/QA 파이프라인 분리 + 시간축 스케줄링</span></div>
+</div>
+<div class="project-result">✦ 빌드 처리 시간 50% 단축, 빌드 실패율 50% 이상 감소</div>
+<div class="project-tags"><span class="project-tag">Jenkins</span><span class="project-tag">CI/CD</span></div>
+</div>
+
+<div class="project-card">
+<div class="project-header"><div class="project-title">글로벌 개발 일정 SSOT 구축</div><span class="project-badge">Excel · 100명</span></div>
+<p class="project-desc">분산된 일정을 하나의 Excel 기반 단일 관리 체계로 통합. 국내/글로벌 두 트랙 + 유관부서 일정을 한 화면에서 가시화.</p>
+<div class="project-meta">
+<div><span class="meta-label">규모</span><br><span class="meta-value">100명, 글로벌 170개국</span></div>
+</div>
+<div class="project-result">✦ 일정 싱크 오류 최소화, 의사결정 속도 향상</div>
+<div class="project-tags"><span class="project-tag">SSOT</span><span class="project-tag">Excel VBA</span></div>
+</div>
+
+<div class="project-card">
+<div class="project-header"><div class="project-title">글로벌 FGT 운영 (170개국)</div><span class="project-badge">글로벌 릴리즈</span></div>
+<p class="project-desc">호연 프로젝트의 빌드를 기반으로 분리 개발한 신규 글로벌 빌드(Blade &amp; Soul Heroes)의 글로벌 FGT를 시간대별로 분할 운영. 실시간 이슈 공유 → 수정 → 재배포.</p>
+<div class="project-result">✦ 글로벌 시간대 분산 환경에서도 테스트 일정 안정적 운영</div>
+<div class="project-tags"><span class="project-tag">FGT</span><span class="project-tag">멀티플랫폼</span></div>
+</div>
+
+<div class="project-card">
+<div class="project-header"><div class="project-title">문서 공유 자동화 (VBA)</div><span class="project-badge">Excel VBA</span></div>
+<p class="project-desc">유관부서 공유 문서가 수작업 중심으로 운영되어 반복 업무·오류가 발생하던 문제를 Excel VBA로 해결.</p>
+<div class="project-result">✦ 문서 공유 시간 1시간 → 10분 이내 단축 (약 80% 감소)</div>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Career</p>
+<div class="career-block">
+<div class="career-header"><span class="career-name">㈜NC</span><span class="career-period">2022.07 — 재직 중</span><span class="career-role">개발 PM</span></div>
+<div class="career-projects">
+<div class="career-project-item"><div class="career-project-name">빌드·릴리즈 파이프라인 운영</div><div class="career-project-detail">Jenkins 기반 CI/CD 설계·운영, Dev/QA 환경 분리, 빌드 실패 분석 및 재발 방지</div></div>
+<div class="career-project-item"><div class="career-project-name">글로벌 일정 관리</div><div class="career-project-detail">100명 규모 국내/글로벌 두 트랙 일정 통합 관리(SSOT), 유관부서 조율</div></div>
+<div class="career-project-item"><div class="career-project-name">멀티플랫폼 출시</div><div class="career-project-detail">iOS·Android·Windows·Steam 동시 출시, 마켓 심사 대응, 글로벌 FGT(170개국) 운영</div></div>
+<div class="career-project-item"><div class="career-project-name">QA 프로세스 관리</div><div class="career-project-detail">QA WBS 일정 수립, DQA/TQA/iQA 환경별 배포 관리, 릴리즈 노트 작성</div></div>
+</div>
+</div>
+<div class="career-block">
+<div class="career-header"><span class="career-name">㈜휴넥트</span><span class="career-period">2019.06 — 2021.07</span><span class="career-role">IT 서비스데스크</span></div>
+<div class="career-projects"><div class="career-project-item"><div class="career-project-name">IT 헬프데스크 운영</div><div class="career-project-detail">사내 전산망 장애·문의 대응, 이슈 분류 및 에스컬레이션</div></div></div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Skills</p>
+<div class="skill-grid">
+<div class="skill-group"><div class="skill-group-title">빌드 / 배포</div><div class="skill-chips"><span class="skill-chip">Jenkins</span><span class="skill-chip">Perforce (P4V)</span><span class="skill-chip">Git / GitHub</span></div></div>
+<div class="skill-group"><div class="skill-group-title">협업 도구</div><div class="skill-chips"><span class="skill-chip">Confluence API</span><span class="skill-chip">Teams Webhook</span><span class="skill-chip">Jira</span></div></div>
+<div class="skill-group"><div class="skill-group-title">개발</div><div class="skill-chips"><span class="skill-chip">Node.js</span><span class="skill-chip">Python</span><span class="skill-chip">Excel VBA</span></div></div>
+<div class="skill-group"><div class="skill-group-title">AI / API</div><div class="skill-chips"><span class="skill-chip">Claude API</span><span class="skill-chip">Gemini API</span></div></div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<div class="contact-box">
+<h2>함께 일해요</h2>
+<p style="color:var(--ink-mid);margin-bottom:20px;">기술 PM, 릴리즈 매니저, PMO 포지션에 관심 있습니다.</p>
+<a class="btn" href="mailto:eun1009sin@gmail.com">이메일 보내기</a>
+</div>
+</section>
+
+<footer>© 2026 Kim Ha Eun</footer>
+</body>
+</html>
