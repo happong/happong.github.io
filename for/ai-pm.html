@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="robots" content="noindex, nofollow" />
+<title>김하은 — AI/Data PM</title>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;0,9..40,600;1,9..40,300&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet" />
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+:root{--white:#fff;--off-white:#f7f7f5;--ink:#111;--ink-mid:#444;--ink-light:#888;
+--accent:#1a56db;--accent-light:#e8effe;--accent-green:#e6f9f0;--accent-green-text:#0d7a4e;
+--accent-purple:#f0eeff;--accent-purple-text:#5b3fd4;--border:#e4e4e0;--tag-bg:#f0f0ec;--radius:10px;--max:820px;}
+body{font-family:'DM Sans',sans-serif;background:var(--white);color:var(--ink);font-size:16px;line-height:1.7;-webkit-font-smoothing:antialiased;}
+.hero{max-width:var(--max);margin:0 auto;padding:64px 24px 40px;}
+.hero-eyebrow{font-family:'DM Mono',monospace;font-size:12px;color:var(--accent);letter-spacing:.1em;text-transform:uppercase;margin-bottom:16px;}
+.hero h1{font-size:clamp(28px,5vw,40px);font-weight:600;letter-spacing:-.02em;margin-bottom:16px;}
+.hero-desc{font-size:16px;color:var(--ink-mid);line-height:1.75;margin-bottom:24px;max-width:600px;}
+.hero-tags{display:flex;flex-wrap:wrap;gap:8px;}
+.tag{font-size:13px;background:var(--tag-bg);color:var(--ink-mid);padding:5px 12px;border-radius:20px;}
+.tag.accent{background:var(--accent-light);color:var(--accent);}
+.divider{max-width:var(--max);margin:0 auto;padding:0 24px;border-top:1px solid var(--border);}
+section{max-width:var(--max);margin:0 auto;padding:56px 24px;}
+.section-label{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);letter-spacing:.12em;text-transform:uppercase;margin-bottom:16px;}
+h2{font-size:24px;font-weight:600;letter-spacing:-.02em;margin-bottom:8px;}
+.strength-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+.strength-card{background:var(--off-white);border-radius:var(--radius);padding:22px 18px;}
+.strength-icon{font-size:20px;margin-bottom:10px;}
+.strength-title{font-size:14px;font-weight:600;margin-bottom:8px;}
+.strength-desc{font-size:13px;color:var(--ink-mid);line-height:1.6;}
+.arch-diagram-wrap{background:var(--off-white);border-radius:var(--radius);padding:32px 24px 24px;margin-bottom:24px;}
+.arch-diagram-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:.1em;text-align:center;margin-bottom:16px;}
+.project-list{display:flex;flex-direction:column;gap:16px;margin-bottom:16px;}
+.project-card{border:1px solid var(--border);border-radius:var(--radius);padding:24px;}
+.project-header{display:flex;justify-content:space-between;gap:12px;margin-bottom:10px;}
+.project-title{font-size:16px;font-weight:600;}
+.project-badge{font-family:'DM Mono',monospace;font-size:11px;background:var(--accent-light);color:var(--accent);padding:3px 9px;border-radius:20px;white-space:nowrap;}
+.project-desc{font-size:13px;color:var(--ink-mid);margin-bottom:14px;line-height:1.7;}
+.project-meta{display:flex;gap:20px;margin-bottom:12px;flex-wrap:wrap;}
+.meta-label{font-family:'DM Mono',monospace;font-size:10px;color:var(--ink-light);text-transform:uppercase;}
+.meta-value{font-size:13px;color:var(--ink);font-weight:500;}
+.project-result{background:var(--accent-light);border-radius:7px;padding:9px 13px;font-size:13px;color:var(--accent);font-weight:500;margin-bottom:12px;}
+.project-tags{display:flex;flex-wrap:wrap;gap:6px;}
+.project-tag{font-size:12px;background:var(--tag-bg);color:var(--ink-mid);padding:3px 10px;border-radius:20px;}
+details.depth{margin-bottom:16px;border:1px solid var(--border);border-radius:var(--radius);padding:4px 20px;}
+details.depth summary{cursor:pointer;font-size:13px;color:var(--ink-mid);padding:14px 0;}
+.career-block{margin-bottom:32px;}
+.career-header{display:flex;align-items:baseline;gap:12px;margin-bottom:12px;padding-bottom:10px;border-bottom:2px solid var(--ink);flex-wrap:wrap;}
+.career-name{font-size:17px;font-weight:700;}
+.career-period{font-family:'DM Mono',monospace;font-size:12px;color:var(--ink-light);}
+.career-role{font-size:12px;background:var(--tag-bg);color:var(--ink-mid);padding:2px 10px;border-radius:20px;}
+.career-projects{display:flex;flex-direction:column;gap:10px;}
+.career-project-item{display:grid;grid-template-columns:170px 1fr;gap:16px;padding:10px 0;border-bottom:1px solid var(--border);}
+.career-project-name{font-size:13px;font-weight:600;}
+.career-project-detail{font-size:13px;color:var(--ink-mid);line-height:1.6;}
+.skill-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:16px;}
+.skill-group{background:var(--off-white);border-radius:var(--radius);padding:20px;}
+.skill-group-title{font-family:'DM Mono',monospace;font-size:11px;color:var(--ink-light);text-transform:uppercase;letter-spacing:.1em;margin-bottom:12px;}
+.skill-chips{display:flex;flex-wrap:wrap;gap:6px;}
+.skill-chip{font-size:13px;background:var(--white);color:var(--ink);padding:4px 11px;border-radius:20px;border:1px solid var(--border);}
+.contact-box{background:var(--off-white);border-radius:var(--radius);padding:40px;text-align:center;}
+.btn{display:inline-flex;align-items:center;gap:6px;padding:10px 20px;border-radius:var(--radius);font-size:14px;font-weight:500;text-decoration:none;background:var(--ink);color:var(--white);}
+footer{border-top:1px solid var(--border);padding:24px;text-align:center;font-size:13px;color:var(--ink-light);}
+@media(max-width:640px){.strength-grid,.skill-grid{grid-template-columns:1fr;}.career-project-item{grid-template-columns:1fr;gap:4px;}}
+</style>
+</head>
+<body>
+
+<div class="hero">
+<p class="hero-eyebrow">AI / Data PM</p>
+<h1><strong>김하은</strong> — LLM API로 실제 서비스를 만드는 기술 PM</h1>
+<p class="hero-desc">
+금융 여신 실무에서 익힌 근거 기반 문제 정의 습관을, 기술 PM 업무에서 문제 발생 → 데이터 정의 → 해결책 방식으로 적용해왔습니다. 반복되는 수작업을 발견하면 LLM API로 직접 서비스를 만들어 해결합니다.
+</p>
+<div class="hero-tags">
+<span class="tag accent">LLM 활용 서비스 개발</span>
+<span class="tag accent">Claude / Gemini API</span>
+<span class="tag">금융 여신 실무 2.3년</span>
+<span class="tag">빌드 리드타임 50% 단축</span>
+</div>
+</div>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Core Strengths</p>
+<div class="strength-grid">
+<div class="strength-card">
+<div class="strength-icon">🤖</div>
+<div class="strength-title">LLM 활용 서비스 개발</div>
+<div class="strength-desc">Claude·Gemini API 연동 서비스 2종을 직접 설계·구현, 사내 실배포. 그 외 업무 자동화 도구 다수 개발·운영.</div>
+</div>
+<div class="strength-card">
+<div class="strength-icon">💰</div>
+<div class="strength-title">금융 도메인 이해</div>
+<div class="strength-desc">대출 심사, 연체 관리, 여신 프로세스 실무 2.3년. AI가 대체해야 할 금융 업무의 병목을 현업에서 직접 체득.</div>
+</div>
+<div class="strength-card">
+<div class="strength-icon">🔧</div>
+<div class="strength-title">기술 PM / 릴리즈 운영</div>
+<div class="strength-desc">Jenkins CI/CD 파이프라인 설계·운영, 빌드 리드타임 50% 단축, 100명 규모 글로벌 프로젝트 SSOT 구축.</div>
+</div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Projects</p>
+<h2>LLM 활용 서비스 아키텍처</h2>
+
+<div class="arch-diagram-wrap">
+<svg width="100%" viewBox="0 0 680 350" role="img" xmlns="http://www.w3.org/2000/svg" style="display:block;">
+<defs><marker id="a3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#b0b0a8" stroke-width="1.5"/></marker></defs>
+<text x="125" y="45" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#888">입력</text>
+<text x="550" y="45" text-anchor="middle" font-family="DM Mono, monospace" font-size="11" fill="#888">출력</text>
+<line x1="210" y1="152" x2="260" y2="197" stroke="#0d7a4e" stroke-width="1" opacity="0.4" marker-end="url(#a3)"/>
+<line x1="210" y1="242" x2="260" y2="197" stroke="#0d7a4e" stroke-width="1" opacity="0.4" marker-end="url(#a3)"/>
+<line x1="420" y1="197" x2="460" y2="112" stroke="#1a56db" stroke-width="1" opacity="0.4" marker-end="url(#a3)"/>
+<line x1="420" y1="197" x2="460" y2="197" stroke="#1a56db" stroke-width="1" opacity="0.4" marker-end="url(#a3)"/>
+<line x1="420" y1="197" x2="460" y2="282" stroke="#1a56db" stroke-width="1" opacity="0.4" marker-end="url(#a3)"/>
+<rect x="40" y="130" width="170" height="44" rx="8" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="125" y="157" text-anchor="middle" font-size="13" fill="#0d7a4e">Jenkins 빌드 실패 로그</text>
+<rect x="40" y="220" width="170" height="44" rx="8" fill="#e6f9f0" stroke="#0d7a4e" stroke-width="0.5"/>
+<text x="125" y="247" text-anchor="middle" font-size="13" fill="#0d7a4e">Sony 영문 개발 공지</text>
+<rect x="260" y="127" width="160" height="140" rx="12" fill="#f0eeff" stroke="#5b3fd4" stroke-width="0.5"/>
+<text x="340" y="190" text-anchor="middle" font-size="14" font-weight="600" fill="#5b3fd4">AI 처리</text>
+<text x="340" y="214" text-anchor="middle" font-size="12" fill="#5b3fd4">Claude · Gemini API</text>
+<rect x="460" y="90" width="180" height="44" rx="8" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="550" y="117" text-anchor="middle" font-size="13" fill="#1a56db">에러 분류·통계 대시보드</text>
+<rect x="460" y="175" width="180" height="44" rx="8" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="550" y="202" text-anchor="middle" font-size="14" fill="#1a56db">Teams 알림</text>
+<rect x="460" y="260" width="180" height="44" rx="8" fill="#e8effe" stroke="#1a56db" stroke-width="0.5"/>
+<text x="550" y="287" text-anchor="middle" font-size="14" fill="#1a56db">Confluence 갱신</text>
+</svg>
+</div>
+
+<div class="project-list">
+<div class="project-card">
+<div class="project-header"><div class="project-title">빌드 로그 AI 분석 대시보드</div><span class="project-badge">Claude API</span></div>
+<p class="project-desc">빌드 실패 시 담당자가 로그를 직접 읽고 원인을 찾는 데 건당 30분 이상 걸리던 문제를 발견했습니다. 실제 반복되는 실패 유형을 분석해 에러 카테고리·담당팀·심각도 분류 기준을 설계하고, Claude/GPT API 기반 자동 분류 파이프라인으로 구현해 사내 배포했습니다.</p>
+<div class="project-result">✦ 분석 시간 대폭 단축, 반복 에러 패턴 통계화로 하드웨어 결함 사전 감지 가능</div>
+<div class="project-tags"><span class="project-tag">Claude API</span><span class="project-tag">GPT API</span></div>
+</div>
+
+<div class="project-card">
+<div class="project-header"><div class="project-title">SIE 공지 자동화 툴</div><span class="project-badge">Gemini API</span></div>
+<p class="project-desc">영문 개발 공지를 수작업으로 번역·전파하던 프로세스를 AI로 완전 자동화. Confluence 갱신 + Teams 발송까지 원클릭.</p>
+<div class="project-result">✦ 공지 전파 수작업 100% 제거, 유사도 기반 중복 감지</div>
+<div class="project-tags"><span class="project-tag">Gemini API</span><span class="project-tag">Confluence</span></div>
+</div>
+</div>
+
+<details class="depth">
+<summary>업무 자동화·인프라 프로젝트 더보기 (AI 미사용, 5종)</summary>
+<div class="project-list" style="padding-top:12px;">
+<div class="project-card"><div class="project-header"><div class="project-title">데일리 스크럼 자동 생성</div><span class="project-badge">Python</span></div><p class="project-desc">매일 수기로 생성하던 Confluence 스크럼 페이지를 Python 스케줄러로 완전 자동화.</p></div>
+<div class="project-card"><div class="project-header"><div class="project-title">빌드 머신 자산 관리 시스템</div><span class="project-badge">Node.js</span></div><p class="project-desc">웹 기반 자산 관리 시스템 구축, 승인 워크플로우 + Confluence 연동.</p></div>
+</div>
+</details>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Career</p>
+<div class="career-block">
+<div class="career-header"><span class="career-name">㈜NC</span><span class="career-period">2022.07 — 재직 중</span><span class="career-role">개발 PM</span></div>
+<div class="career-projects">
+<div class="career-project-item"><div class="career-project-name">LLM 활용 서비스 개발</div><div class="career-project-detail">Claude/Gemini API 연동 서비스 2종 설계·구현·운영 (빌드 로그 분석, SIE 공지 자동화)</div></div>
+<div class="career-project-item"><div class="career-project-name">빌드·릴리즈 파이프라인</div><div class="career-project-detail">Jenkins 기반 CI/CD 설계·운영, 빌드 리드타임 50% 단축</div></div>
+</div>
+</div>
+<div class="career-block">
+<div class="career-header"><span class="career-name">㈜오케이저축은행</span><span class="career-period">2016.11 — 2017.06</span><span class="career-role">여신 담당</span></div>
+<div class="career-projects"><div class="career-project-item"><div class="career-project-name">햇살론 대출 심사</div><div class="career-project-detail">신용도·재직 확인 등 서류 심사, 수기 검증 병목·예외 케이스 직접 경험</div></div></div>
+</div>
+<div class="career-block">
+<div class="career-header"><span class="career-name">미즈사랑대부 / BSHR 파견</span><span class="career-period">2015.03 — 2016.11</span><span class="career-role">대출 상담·CRM</span></div>
+<div class="career-projects"><div class="career-project-item"><div class="career-project-name">CRM 기반 연체 관리</div><div class="career-project-detail">연체 발생 패턴과 고객 행동 특성을 현업에서 반복적으로 관찰</div></div></div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<p class="section-label">Skills</p>
+<div class="skill-grid">
+<div class="skill-group"><div class="skill-group-title">AI / API</div><div class="skill-chips"><span class="skill-chip">Claude API</span><span class="skill-chip">Gemini API</span><span class="skill-chip">GPT API</span></div></div>
+<div class="skill-group"><div class="skill-group-title">개발</div><div class="skill-chips"><span class="skill-chip">Node.js</span><span class="skill-chip">Python</span></div></div>
+<div class="skill-group"><div class="skill-group-title">빌드/배포</div><div class="skill-chips"><span class="skill-chip">Jenkins</span><span class="skill-chip">Git</span></div></div>
+<div class="skill-group"><div class="skill-group-title">협업 도구</div><div class="skill-chips"><span class="skill-chip">Confluence API</span><span class="skill-chip">Teams Webhook</span></div></div>
+</div>
+</section>
+
+<div class="divider"></div>
+
+<section>
+<div class="contact-box">
+<h2>함께 일해요</h2>
+<p style="color:var(--ink-mid);margin-bottom:20px;">AI PM, Data PM 포지션에 관심 있습니다.</p>
+<a class="btn" href="mailto:eun1009sin@gmail.com">이메일 보내기</a>
+</div>
+</section>
+
+<footer>© 2026 Kim Ha Eun</footer>
+</body>
+</html>
