@@ -214,6 +214,10 @@
     .contact-links { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
 
     footer { border-top: 1px solid var(--border); padding: 24px; text-align: center; font-size: 13px; color: var(--ink-light); }
+    .footer-variants { margin-top: 10px; font-size: 11px; letter-spacing: 0.05em; }
+    .footer-variants a { color: var(--white); text-decoration: none; margin: 0 8px; transition: color 0.4s ease; }
+    .footer-variants a:hover { color: var(--ink-light); }
+    @media print { .footer-variants { display: none !important; } }
 
     /* RESPONSIVE */
     @media (max-width: 640px) {
@@ -911,6 +915,11 @@
 </section>
 <footer>
   © 2026 Ann (Haeun Kim) · Built with HTML/CSS · Hosted on GitHub Pages
+  <div class="footer-variants">
+    <a href="for/release-pm.html" rel="nofollow">release</a>
+    <a href="for/ai-pm.html" rel="nofollow">ai</a>
+    <a href="for/new-grad.html" rel="nofollow">new-grad</a>
+  </div>
 </footer>
 </body>
 </html>
