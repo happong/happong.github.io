@@ -20,6 +20,8 @@
 
 | 지원 건 | 주소 |
 |---|---|
+| 쿠팡이츠 Technical Program Manager | `cpeats-tpm` (생성됨) |
+| 토스뱅크 IT Planning Manager | `tossbank-itpm` (생성됨) |
 | 현대오토에버 IT PM (CRM 시스템) | `hunau-pm` |
 | 카카오페이 프로젝트매니저 | `kapay-pm` |
 | 토스 AI 직무 | `toss-ai` |
