@@ -10,17 +10,17 @@
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
     :root {
-      --white: #ffffff; --off-white: #f7f7f5; --ink: #111111;
-      --ink-mid: #444444; --ink-light: #888888; --accent: #1a56db;
-      --accent-light: #e8effe; --accent-green: #e6f9f0; --accent-green-text: #0d7a4e;
-      --border: #e4e4e0; --tag-bg: #f0f0ec; --radius: 10px; --max: 780px;
+      --white: #fbf8f3; --off-white: #f4efe7; --ink: #2b2420;
+      --ink-mid: #5a4f47; --ink-light: #8a7e74; --accent: #9a5235;
+      --accent-light: #f5e8df; --accent-green: #e9efe6; --accent-green-text: #4f6f52;
+      --border: #e3dacd; --tag-bg: #ece5da; --radius: 10px; --max: 780px;
     }
     html { scroll-behavior: smooth; }
     body { font-family: 'DM Sans', sans-serif; background: var(--white); color: var(--ink); font-size: 16px; line-height: 1.7; -webkit-font-smoothing: antialiased; }
 
     nav {
       position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-      background: rgba(255,255,255,0.92); backdrop-filter: blur(12px);
+      background: rgba(251,248,243,0.92); backdrop-filter: blur(12px);
       border-bottom: 1px solid var(--border); padding: 0 24px; height: 56px;
       display: flex; align-items: center; justify-content: space-between;
     }
@@ -61,7 +61,7 @@
 
     .psr-row { display: grid; grid-template-columns: 70px 1fr; gap: 10px; padding: 6px 0; font-size: 13px; line-height: 1.6; }
     .psr-label { font-family: 'DM Mono', monospace; font-size: 11px; font-weight: 700; padding: 2px 8px; border-radius: 6px; height: fit-content; text-align: center; }
-    .psr-label.problem { background: #fef2f2; color: #dc2626; }
+    .psr-label.problem { background: #f8e8e3; color: #a8434a; }
     .psr-label.solution { background: var(--accent-light); color: var(--accent); }
     .psr-label.result { background: var(--accent-green); color: var(--accent-green-text); }
     .psr-text { color: var(--ink-mid); }
